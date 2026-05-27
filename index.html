@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harbor Boys — Summer 2001</title>
+<title>Harbor Boys — 2001</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,7 +16,7 @@
     --ocean-blue: #2c5f7a;
     --faded-blue: #5a8fa8;
     --sunset-orange: #c8622a;
-    --film-grain: rgba(180,140,80,0.06);
+    --danger-red: #8b1a1a;
   }
 
   html { scroll-behavior: smooth; }
@@ -28,7 +28,6 @@
     overflow-x: hidden;
   }
 
-  /* Film grain overlay */
   body::before {
     content: '';
     position: fixed;
@@ -45,26 +44,15 @@
   .hero {
     position: relative;
     height: 100vh;
-    min-height: 600px;
+    min-height: 620px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: linear-gradient(
-      180deg,
-      #0d0a06 0%,
-      #1a2535 25%,
-      #2c4a5e 45%,
-      #c8862a 65%,
-      #e8a040 75%,
-      #d4752a 82%,
-      #3a2810 92%,
-      #1a130a 100%
-    );
+    background: linear-gradient(180deg, #0d0a06 0%, #1a2535 25%, #2c4a5e 45%, #c8862a 65%, #e8a040 75%, #d4752a 82%, #3a2810 92%, #1a130a 100%);
   }
 
-  /* Ocean horizon effect */
   .hero::after {
     content: '';
     position: absolute;
@@ -74,41 +62,24 @@
     pointer-events: none;
   }
 
-  /* Sun disc */
   .sun {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    width: 120px; height: 120px;
     border-radius: 50%;
     background: radial-gradient(circle, #fde68a 0%, #f59e0b 40%, #d97706 70%, #b45309 100%);
-    top: 42%;
-    left: 50%;
+    top: 42%; left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 60px 20px rgba(251,191,36,0.3), 0 0 120px 60px rgba(217,119,6,0.15);
-    opacity: 0.9;
   }
 
-  /* Water shimmer */
   .water {
     position: absolute;
     bottom: 0; left: 0; right: 0;
     height: 32%;
-    background: linear-gradient(
-      180deg,
-      rgba(44,95,122,0.4) 0%,
-      rgba(26,56,74,0.7) 40%,
-      rgba(13,26,36,0.9) 100%
-    );
+    background: linear-gradient(180deg, rgba(44,95,122,0.4) 0%, rgba(26,56,74,0.7) 40%, rgba(13,26,36,0.9) 100%);
   }
 
-  .water-lines {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    overflow: hidden;
-  }
-
-  .water-lines::before,
-  .water-lines::after {
+  .water-lines::before, .water-lines::after {
     content: '';
     position: absolute;
     left: 0; right: 0;
@@ -116,22 +87,25 @@
     background: rgba(253,230,138,0.15);
     animation: shimmer 3s ease-in-out infinite;
   }
-  .water-lines::before { top: 20%; animation-delay: 0s; }
+  .water-lines { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
+  .water-lines::before { top: 20%; }
   .water-lines::after  { top: 50%; animation-delay: 1.5s; }
-
   @keyframes shimmer {
     0%,100% { opacity: 0.1; transform: scaleX(0.8) translateX(5%); }
     50%      { opacity: 0.4; transform: scaleX(1.05) translateX(-2%); }
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    padding: 0 20px;
-    animation: fadeInUp 1.6s ease forwards;
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%);
+    pointer-events: none; z-index: 5;
   }
 
+  .hero-content {
+    position: relative; z-index: 10;
+    text-align: center; padding: 0 20px;
+    animation: fadeInUp 1.6s ease forwards;
+  }
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -146,799 +120,840 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     padding: 4px 10px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     opacity: 0.75;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(14px, 2.5vw, 22px);
+    letter-spacing: 0.3em;
+    color: var(--sand);
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 0.3em;
   }
 
   .hero-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(72px, 14vw, 160px);
-    letter-spacing: 0.08em;
-    line-height: 0.9;
+    font-size: clamp(80px, 16vw, 180px);
+    letter-spacing: 0.06em;
+    line-height: 0.88;
     color: var(--cream);
     text-shadow: 2px 4px 30px rgba(0,0,0,0.6);
-    margin-bottom: 0.1em;
-  }
-
-  .hero-title span {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(18px, 3.5vw, 42px);
-    font-weight: 400;
-    letter-spacing: 0.35em;
-    color: var(--sand);
-    text-transform: uppercase;
-    margin-bottom: 0.4em;
-    opacity: 0.85;
   }
 
   .hero-year {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(18px, 3vw, 32px);
-    letter-spacing: 0.5em;
+    font-size: clamp(16px, 2.5vw, 28px);
+    letter-spacing: 0.55em;
     color: var(--faded-blue);
     opacity: 0.8;
-    margin-top: 0.4em;
+    margin-top: 0.5em;
   }
 
   .hero-tagline {
     font-style: italic;
     font-size: clamp(16px, 2.2vw, 22px);
     color: var(--sand);
-    opacity: 0.7;
-    margin-top: 1.8rem;
-    letter-spacing: 0.04em;
+    opacity: 0.72;
+    margin-top: 1.6rem;
+    letter-spacing: 0.03em;
   }
 
   .hero-cta {
-    display: flex;
-    gap: 16px;
+    display: flex; gap: 16px;
     justify-content: center;
-    margin-top: 2.5rem;
+    margin-top: 2.2rem;
     flex-wrap: wrap;
   }
 
   .btn {
     font-family: 'EB Garamond', serif;
-    font-size: 15px;
+    font-size: 14px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 12px 32px;
+    padding: 11px 28px;
     transition: all 0.3s ease;
     cursor: pointer;
     border: none;
     display: inline-block;
   }
-
-  .btn-primary {
-    background: var(--sunset-orange);
-    color: var(--cream);
-    box-shadow: 0 0 30px rgba(200,98,42,0.3);
-  }
-  .btn-primary:hover {
-    background: #d97040;
-    box-shadow: 0 0 40px rgba(200,98,42,0.5);
-    transform: translateY(-1px);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--sand);
-    border: 1px solid rgba(232,213,168,0.4);
-  }
-  .btn-outline:hover {
-    border-color: var(--sand);
-    background: rgba(232,213,168,0.08);
-  }
+  .btn-primary { background: var(--sunset-orange); color: var(--cream); box-shadow: 0 0 30px rgba(200,98,42,0.3); }
+  .btn-primary:hover { background: #d97040; transform: translateY(-1px); box-shadow: 0 0 40px rgba(200,98,42,0.5); }
+  .btn-outline { background: transparent; color: var(--sand); border: 1px solid rgba(232,213,168,0.4); }
+  .btn-outline:hover { border-color: var(--sand); background: rgba(232,213,168,0.08); }
+  .btn-danger { background: var(--danger-red); color: var(--cream); }
+  .btn-danger:hover { background: #a02020; transform: translateY(-1px); }
 
   .scroll-hint {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0.45;
-    animation: bob 2.5s ease-in-out infinite;
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%); z-index: 10;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0.45; animation: bob 2.5s ease-in-out infinite;
   }
-  .scroll-hint span {
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--sand);
-  }
+  .scroll-hint span { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sand); }
   .scroll-hint svg { width: 16px; height: 20px; fill: none; stroke: var(--sand); stroke-width: 1.5; }
   @keyframes bob {
     0%,100% { transform: translateX(-50%) translateY(0); }
     50%      { transform: translateX(-50%) translateY(6px); }
   }
 
-  /* ---- SECTION BASE ---- */
-  section { position: relative; }
-
-  .section-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 80px 24px;
+  /* ---- CELEBRITY QUOTE TICKER ---- */
+  .celeb-bar {
+    background: var(--sunset-orange);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
   }
-
-  .section-label {
-    font-size: 11px;
-    letter-spacing: 0.35em;
+  .ticker-track {
+    display: inline-block;
+    animation: ticker 22s linear infinite;
+  }
+  .ticker-track span {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: #fff8ee;
+    padding: 0 48px;
+    letter-spacing: 0.04em;
+  }
+  .ticker-track span strong {
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--faded-blue);
-    margin-bottom: 1.5rem;
+    font-size: 13px;
     opacity: 0.85;
+    margin-right: 6px;
   }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* ---- ABOUT ---- */
-  .about {
-    background: #110e07;
-    border-top: 1px solid rgba(232,213,168,0.08);
+  /* ---- SECTIONS ---- */
+  section { position: relative; }
+  .section-inner { max-width: 980px; margin: 0 auto; padding: 80px 24px; }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--faded-blue); margin-bottom: 1.4rem; opacity: 0.85;
   }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-
-  @media (max-width: 680px) {
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-  }
-
-  .about-synopsis h2 {
+  .section-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(30px, 4vw, 46px);
-    font-weight: 400;
-    line-height: 1.2;
-    color: var(--cream);
-    margin-bottom: 1.5rem;
+    font-weight: 400; line-height: 1.2; color: var(--cream); margin-bottom: 1.5rem;
   }
+  .section-title em { font-style: italic; color: var(--sand); }
 
-  .about-synopsis h2 em {
-    font-style: italic;
-    color: var(--sand);
+  /* ---- ABOUT / SYNOPSIS ---- */
+  .about { background: #110e07; border-top: 1px solid rgba(232,213,168,0.07); }
+
+  .about-grid {
+    display: grid; grid-template-columns: 3fr 2fr; gap: 64px; align-items: start;
   }
+  @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
 
   .about-synopsis p {
-    font-size: 18px;
-    line-height: 1.85;
-    color: rgba(245,237,216,0.75);
-    margin-bottom: 1.2rem;
+    font-size: 19px; line-height: 1.85; color: rgba(245,237,216,0.78); margin-bottom: 1.2rem;
   }
 
-  .divider {
-    width: 48px;
-    height: 1px;
-    background: var(--sunset-orange);
-    margin: 2rem 0;
-    opacity: 0.6;
-  }
+  .divider { width: 48px; height: 1px; background: var(--sunset-orange); margin: 1.8rem 0; opacity: 0.6; }
 
-  /* Polaroid-style stills */
-  .stills {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .polaroid {
-    background: #f0e8d5;
-    padding: 12px 12px 40px;
-    transform: rotate(-2deg);
-    box-shadow: 4px 6px 20px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease;
+  /* Heritage badge */
+  .heritage-badge {
+    border: 1px solid rgba(90,143,168,0.35);
+    padding: 20px 24px;
+    margin-top: 2rem;
     position: relative;
   }
-
-  .polaroid:nth-child(2) { transform: rotate(1.5deg); align-self: flex-end; width: 80%; }
-  .polaroid:nth-child(3) { transform: rotate(-1deg); align-self: center; width: 70%; }
-
-  .polaroid:hover { transform: rotate(0deg) scale(1.02) !important; z-index: 10; }
-
-  .polaroid-img {
-    width: 100%;
-    aspect-ratio: 4/3;
-    background: var(--ocean-blue);
-    overflow: hidden;
-    position: relative;
+  .heritage-badge::before {
+    content: 'EST.';
+    position: absolute; top: -9px; left: 16px;
+    background: #110e07;
+    padding: 0 8px;
+    font-size: 10px; letter-spacing: 0.3em; color: var(--faded-blue);
+  }
+  .heritage-badge .year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px; letter-spacing: 0.08em;
+    color: var(--faded-blue); opacity: 0.5; line-height: 1;
+  }
+  .heritage-badge p {
+    font-size: 14px !important; color: rgba(245,237,216,0.45) !important;
+    margin: 0 !important; letter-spacing: 0.06em;
   }
 
-  .polaroid-img svg { width: 100%; height: 100%; }
-
-  .polaroid-caption {
+  /* Timeline */
+  .timeline { margin-top: 2.5rem; }
+  .timeline-item {
+    display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start;
+  }
+  .tl-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--sunset-orange); flex-shrink: 0; margin-top: 6px;
+    box-shadow: 0 0 8px rgba(200,98,42,0.5);
+  }
+  .tl-content h4 {
     font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 13px;
-    color: #5a4a30;
-    text-align: center;
-    margin-top: 8px;
-    position: absolute;
-    bottom: 10px;
-    left: 0; right: 0;
+    font-size: 16px; font-weight: 500; color: var(--cream); margin-bottom: 3px;
+  }
+  .tl-content p {
+    font-size: 14px !important; line-height: 1.6 !important;
+    color: rgba(245,237,216,0.5) !important; margin: 0 !important;
   }
 
   /* ---- FILMSTRIP / CAST ---- */
-  .cast-section {
-    background: #0d0a06;
-    overflow: hidden;
-  }
+  .cast-section { background: #0d0a06; overflow: hidden; }
 
   .filmstrip-border {
-    height: 28px;
-    background: #1a1209;
-    border-top: 2px solid #2a2015;
-    border-bottom: 2px solid #2a2015;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    margin-bottom: 0;
+    height: 28px; background: #1a1209;
+    border-top: 2px solid #2a2015; border-bottom: 2px solid #2a2015;
+    display: flex; align-items: center; overflow: hidden;
   }
-
-  .filmstrip-holes {
-    display: flex;
-    gap: 0;
-    width: 100%;
-  }
-
+  .filmstrip-holes { display: flex; width: 100%; }
   .filmstrip-holes span {
-    display: inline-block;
-    width: 20px;
-    height: 14px;
-    background: #0d0a06;
-    border-radius: 3px;
-    margin: 0 6px;
-    flex-shrink: 0;
+    display: inline-block; width: 20px; height: 14px;
+    background: #0d0a06; border-radius: 3px; margin: 0 6px; flex-shrink: 0;
   }
 
   .cast-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
   }
+  @media (max-width: 700px) { .cast-grid { grid-template-columns: repeat(2, 1fr); } }
 
   .cast-card {
-    padding: 40px 24px;
-    border-right: 1px solid rgba(232,213,168,0.06);
-    text-align: center;
-    transition: background 0.3s;
-    cursor: default;
+    padding: 36px 20px; border-right: 1px solid rgba(232,213,168,0.06);
+    text-align: center; transition: background 0.3s;
   }
-
   .cast-card:last-child { border-right: none; }
   .cast-card:hover { background: rgba(232,213,168,0.04); }
 
   .cast-avatar {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: var(--ocean-blue);
-    margin: 0 auto 16px;
-    overflow: hidden;
-    border: 2px solid rgba(90,143,168,0.3);
+    width: 68px; height: 68px; border-radius: 50%;
+    margin: 0 auto 14px; overflow: hidden;
+    border: 2px solid rgba(90,143,168,0.25);
   }
-
   .cast-avatar svg { width: 100%; height: 100%; }
 
-  .cast-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    color: var(--cream);
-    margin-bottom: 4px;
+  .cast-name { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--cream); margin-bottom: 4px; }
+  .cast-role { font-size: 12px; letter-spacing: 0.08em; color: rgba(245,237,216,0.4); text-transform: uppercase; }
+
+  /* ---- PIRATES ---- */
+  .pirates-section { background: #0a0604; }
+
+  .pirates-header {
+    display: flex; align-items: flex-end; gap: 24px; margin-bottom: 3rem; flex-wrap: wrap;
   }
 
-  .cast-role {
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    color: rgba(245,237,216,0.45);
-    text-transform: uppercase;
+  .skull-emblem {
+    font-size: 48px; line-height: 1; filter: grayscale(1) opacity(0.6);
   }
+
+  .pirates-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px;
+    background: rgba(139,26,26,0.2);
+    border: 1px solid rgba(139,26,26,0.3);
+  }
+
+  .pirate-card {
+    background: #0a0604; padding: 28px 20px; text-align: center;
+    transition: background 0.3s; position: relative;
+  }
+  .pirate-card:hover { background: rgba(139,26,26,0.1); }
+
+  .pirate-initial {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(139,26,26,0.25);
+    border: 1px solid rgba(139,26,26,0.4);
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: #c05050;
+  }
+
+  .pirate-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; color: rgba(245,200,180,0.75); font-style: italic;
+  }
+
+  .pirate-tag {
+    display: inline-block; margin-top: 6px;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(200,100,80,0.5);
+  }
+
+  /* ---- STORY ACTS ---- */
+  .acts-section { background: #110e07; }
+
+  .acts-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    margin-top: 3rem;
+    background: rgba(232,213,168,0.06);
+  }
+  @media (max-width: 600px) { .acts-grid { grid-template-columns: 1fr; } }
+
+  .act-card {
+    background: #110e07; padding: 40px 32px;
+    position: relative; overflow: hidden;
+  }
+
+  .act-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px; color: rgba(232,213,168,0.04);
+    position: absolute; top: 10px; right: 20px;
+    line-height: 1; pointer-events: none;
+  }
+
+  .act-label {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--faded-blue); margin-bottom: 12px; opacity: 0.7;
+  }
+
+  .act-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--cream); margin-bottom: 14px; font-weight: 400;
+  }
+
+  .act-body {
+    font-size: 16px; line-height: 1.8; color: rgba(245,237,216,0.65);
+  }
+
+  /* Explosion act special */
+  .act-card.explosive {
+    background: linear-gradient(135deg, #1a0a04 0%, #2a1008 100%);
+  }
+  .act-card.explosive .act-label { color: #c05030; }
+  .act-card.explosive .act-title { color: #f0c090; }
+
+  /* ---- INTEL SIDEBAR ---- */
+  .intel-section { background: #0d0a06; }
+  .intel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 2.5rem; }
+  @media (max-width: 600px) { .intel-grid { grid-template-columns: 1fr; } }
+
+  .intel-card {
+    border: 1px solid rgba(232,213,168,0.1); padding: 28px 24px;
+    position: relative;
+  }
+  .intel-card::before {
+    content: attr(data-tag);
+    position: absolute; top: -9px; left: 16px;
+    background: #0d0a06; padding: 0 8px;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--faded-blue);
+  }
+  .intel-card h3 {
+    font-family: 'Playfair Display', serif; font-size: 20px;
+    color: var(--cream); margin-bottom: 10px; font-weight: 400;
+  }
+  .intel-card p { font-size: 16px; line-height: 1.75; color: rgba(245,237,216,0.6); }
 
   /* ---- QUOTE ---- */
   .quote-section {
-    background: var(--ocean-blue);
     background: linear-gradient(135deg, #1a2e3e 0%, #0f1e28 50%, #1a2535 100%);
     border-top: 1px solid rgba(90,143,168,0.2);
     border-bottom: 1px solid rgba(90,143,168,0.2);
   }
-
-  .quote-inner {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 80px 24px;
-    text-align: center;
-  }
+  .quote-inner { max-width: 780px; margin: 0 auto; padding: 80px 24px; text-align: center; }
 
   .big-quote {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(26px, 4vw, 44px);
-    line-height: 1.4;
-    color: var(--cream);
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: clamp(24px, 3.8vw, 42px); line-height: 1.45; color: var(--cream);
     position: relative;
   }
-
   .big-quote::before {
-    content: '\201C';
-    font-size: 8em;
-    color: rgba(90,143,168,0.15);
-    position: absolute;
-    top: -0.3em;
-    left: -0.1em;
-    font-family: 'Playfair Display', serif;
-    line-height: 1;
-    pointer-events: none;
+    content: '\201C'; font-size: 8em;
+    color: rgba(90,143,168,0.12);
+    position: absolute; top: -0.3em; left: -0.1em;
+    font-family: 'Playfair Display', serif; line-height: 1; pointer-events: none;
   }
 
-  .quote-attr {
-    margin-top: 2rem;
-    font-size: 13px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--faded-blue);
-    opacity: 0.7;
-  }
+  .quote-attr { margin-top: 1.8rem; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--faded-blue); opacity: 0.7; }
+  .stars { margin: 1.4rem 0 0.5rem; color: #f59e0b; font-size: 18px; letter-spacing: 4px; }
 
-  .stars {
-    margin: 1.5rem 0 0.5rem;
-    color: #f59e0b;
-    font-size: 18px;
-    letter-spacing: 4px;
+  /* ---- SLOW MOTION WALK ---- */
+  .slowmo-section {
+    background: #0a0804;
+    text-align: center;
   }
+  .slowmo-inner { max-width: 780px; margin: 0 auto; padding: 80px 24px; }
 
-  /* ---- DETAILS ---- */
-  .details-section {
-    background: #110e07;
+  .explosion-scene {
+    position: relative; width: 100%; max-width: 680px;
+    margin: 3rem auto 0;
+    aspect-ratio: 16/7;
+    overflow: hidden;
   }
+  .explosion-scene svg { width: 100%; height: 100%; }
 
+  /* ---- FILM DETAILS ---- */
+  .details-section { background: #110e07; }
   .details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1px;
-    background: rgba(232,213,168,0.08);
-    border: 1px solid rgba(232,213,168,0.08);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+    background: rgba(232,213,168,0.07);
+    border: 1px solid rgba(232,213,168,0.07);
     margin-top: 3rem;
   }
+  @media (max-width: 580px) { .details-grid { grid-template-columns: 1fr; } }
 
-  @media (max-width: 580px) {
-    .details-grid { grid-template-columns: 1fr; }
-    .cast-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .detail-cell {
-    background: #110e07;
-    padding: 32px 28px;
-  }
-
-  .detail-label {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--faded-blue);
-    margin-bottom: 10px;
-    opacity: 0.8;
-  }
-
-  .detail-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    color: var(--cream);
-    line-height: 1.3;
-  }
-
-  .detail-value small {
-    display: block;
-    font-family: 'EB Garamond', serif;
-    font-size: 14px;
-    color: rgba(245,237,216,0.5);
-    margin-top: 4px;
-    font-style: italic;
-  }
-
-  /* ---- TRAILER ---- */
-  .trailer-section {
-    background: #0a0804;
-  }
-
-  .trailer-frame {
-    position: relative;
-    width: 100%;
-    max-width: 720px;
-    margin: 3rem auto 0;
-    aspect-ratio: 16/9;
-    background: #1a2535;
-    border: 1px solid rgba(90,143,168,0.2);
-    overflow: hidden;
-    cursor: pointer;
-  }
-
-  .trailer-placeholder {
-    width: 100%; height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #0f1e28 0%, #1a3045 50%, #0f1e28 100%);
-    gap: 16px;
-  }
-
-  .play-btn {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    border: 2px solid rgba(245,237,216,0.5);
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.3s;
-  }
-
-  .trailer-frame:hover .play-btn {
-    border-color: var(--cream);
-    background: rgba(245,237,216,0.1);
-    transform: scale(1.1);
-  }
-
-  .play-btn svg { width: 20px; height: 20px; fill: var(--cream); margin-left: 3px; }
-
-  .trailer-label {
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(245,237,216,0.5);
-  }
-
-  /* Scan line effect */
-  .scanlines {
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.03) 2px,
-      rgba(0,0,0,0.03) 4px
-    );
-    pointer-events: none;
-  }
+  .detail-cell { background: #110e07; padding: 30px 26px; }
+  .detail-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faded-blue); margin-bottom: 10px; opacity: 0.8; }
+  .detail-value { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--cream); line-height: 1.3; }
+  .detail-value small { display: block; font-family: 'EB Garamond', serif; font-size: 14px; color: rgba(245,237,216,0.45); margin-top: 4px; font-style: italic; }
 
   /* ---- FOOTER ---- */
   footer {
-    background: #0a0804;
-    border-top: 1px solid rgba(232,213,168,0.07);
-    padding: 60px 24px 40px;
-    text-align: center;
+    background: #0a0804; border-top: 1px solid rgba(232,213,168,0.07);
+    padding: 60px 24px 40px; text-align: center;
   }
-
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 0.15em;
-    color: var(--sand);
-    opacity: 0.5;
-    margin-bottom: 1.5rem;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 32px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-
-  .footer-links a {
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(245,237,216,0.35);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.15em; color: var(--sand); opacity: 0.45; margin-bottom: 1.5rem; }
+  .footer-links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .footer-links a { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,237,216,0.3); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: rgba(245,237,216,0.7); }
+  .footer-copy { font-size: 12px; color: rgba(245,237,216,0.18); letter-spacing: 0.08em; }
 
-  .footer-copy {
-    font-size: 12px;
-    color: rgba(245,237,216,0.2);
-    letter-spacing: 0.08em;
-  }
-
-  /* Vignette helper */
-  .vignette {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%);
-    pointer-events: none;
-    z-index: 5;
-  }
-
-  /* Fade-in on scroll utility */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
+  /* Reveal animation */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
 
-<!-- ===== HERO ===== -->
+<!-- HERO -->
 <section class="hero">
   <div class="sun"></div>
-  <div class="water">
-    <div class="water-lines"></div>
-  </div>
+  <div class="water"><div class="water-lines"></div></div>
   <div class="vignette"></div>
-
   <div class="hero-content">
-    <div class="rating-badge">PG-13 &nbsp;·&nbsp; 1 hr 48 min &nbsp;·&nbsp; Drama</div>
-    <h1 class="hero-title">
-      <span>A Film About</span>
-      Harbor Boys
-    </h1>
-    <div class="hero-year">Summer &nbsp;·&nbsp; 2001</div>
-    <p class="hero-tagline">Some summers last forever.</p>
+    <div class="rating-badge">R &nbsp;·&nbsp; 2 hr 4 min &nbsp;·&nbsp; Action · Drama · Brotherhood</div>
+    <div class="hero-eyebrow">The Legend of</div>
+    <h1 class="hero-title">Harbor Boys</h1>
+    <div class="hero-year">May — October &nbsp;·&nbsp; 2001</div>
+    <p class="hero-tagline">800 years of harbor. One summer to defend it.</p>
     <div class="hero-cta">
-      <a href="#trailer" class="btn btn-primary">Watch Trailer</a>
-      <a href="#about" class="btn btn-outline">Discover the Film</a>
+      <a href="#acts" class="btn btn-primary">The Story</a>
+      <a href="#cast" class="btn btn-outline">Meet the Brothers</a>
+      <a href="#pirates" class="btn btn-danger">Know Your Enemy</a>
     </div>
   </div>
-
   <div class="scroll-hint">
     <span>Scroll</span>
     <svg viewBox="0 0 16 20"><path d="M8 1v14M2 9l6 6 6-6"/></svg>
   </div>
 </section>
 
-<!-- ===== ABOUT ===== -->
+<!-- CELEBRITY TICKER -->
+<div class="celeb-bar">
+  <div class="ticker-track">
+    <span><strong>Ja Morant</strong> "Hi, this is my favorite movie." &nbsp;★★★★★</span>
+    <span>·</span>
+    <span><strong>Ja Morant</strong> "Hi, this is my favorite movie." &nbsp;★★★★★</span>
+    <span>·</span>
+    <span><strong>Ja Morant</strong> "Hi, this is my favorite movie." &nbsp;★★★★★</span>
+    <span>·</span>
+    <span><strong>Ja Morant</strong> "Hi, this is my favorite movie." &nbsp;★★★★★</span>
+    <span>·</span>
+    <span><strong>Ja Morant</strong> "Hi, this is my favorite movie." &nbsp;★★★★★</span>
+    <span>·</span>
+    <span><strong>Ja Morant</strong> "Hi, this is my favorite movie." &nbsp;★★★★★</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
 <section class="about" id="about">
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-synopsis reveal">
         <p class="section-label">The Story</p>
-        <h2>Five boys. One <em>last summer</em> before everything changes.</h2>
+        <h2 class="section-title">Five brothers. <em>Eight centuries</em> of harbor.</h2>
         <div class="divider"></div>
-        <p>Somewhere along the sun-bleached docks of Cape Harrow, four teenage boys share their final summer together before the world pulls them apart. Between salt air and small confessions, they learn what it means to hold on — and when to let go.</p>
-        <p>Harbor Boys is a tender, unhurried portrait of friendship at the edge of adolescence, where every evening bonfire feels like a farewell and every morning tide brings the future a little closer.</p>
-        <div style="margin-top: 2.5rem; display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="#" class="btn btn-primary" style="font-size:13px; padding: 10px 24px;">Find Showtimes</a>
-          <a href="#" class="btn btn-outline" style="font-size:13px; padding: 10px 24px;">Now on Home Video</a>
+        <p>Since the year 201, the harbor has belonged to one bloodline. Michael, Liam, Kyle, Sean, and Benjamin — five brothers, all poor, all proud — carry that legacy into the summer of 2001, surviving off scraps tossed from the gleaming yachts that float through their world without stopping.</p>
+        <p>They don't ask for much. But when evil pirates arrive to take what little they have — stealing their gold, their tea, their dignity — the Harbor Boys discover something no pirate can plunder: the power of brotherhood and the fury of a harbor that has never, in 1,800 years, belonged to anyone else.</p>
+        <div class="heritage-badge">
+          <div class="year">201 — 2001</div>
+          <p>1,800 years of harbor heritage. Unbroken.</p>
         </div>
       </div>
 
-      <div class="stills reveal" style="transition-delay: 0.2s;">
-        <!-- Polaroid 1 -->
-        <div class="polaroid">
-          <div class="polaroid-img">
-            <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#1a2535"/>
-                  <stop offset="60%" stop-color="#c8622a" stop-opacity="0.8"/>
-                  <stop offset="100%" stop-color="#e8a040"/>
-                </linearGradient>
-                <linearGradient id="sea1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#2c5f7a" stop-opacity="0.7"/>
-                  <stop offset="100%" stop-color="#0d1e28"/>
-                </linearGradient>
-              </defs>
-              <rect width="280" height="210" fill="url(#sky1)"/>
-              <ellipse cx="140" cy="105" rx="30" ry="30" fill="#f59e0b" opacity="0.9"/>
-              <rect y="126" width="280" height="84" fill="url(#sea1)"/>
-              <line x1="0" y1="136" x2="280" y2="134" stroke="rgba(253,230,138,0.2)" stroke-width="1.5"/>
-              <line x1="0" y1="150" x2="280" y2="148" stroke="rgba(253,230,138,0.1)" stroke-width="1"/>
-              <!-- Dock silhouette -->
-              <rect x="100" y="118" width="80" height="8" fill="#1a130a" opacity="0.8" rx="1"/>
-              <rect x="118" y="118" width="5" height="20" fill="#1a130a" opacity="0.8"/>
-              <rect x="155" y="118" width="5" height="20" fill="#1a130a" opacity="0.8"/>
-              <!-- Figures -->
-              <ellipse cx="128" cy="117" rx="4" ry="6" fill="#1a130a" opacity="0.85"/>
-              <ellipse cx="142" cy="115" rx="4" ry="7" fill="#1a130a" opacity="0.85"/>
-              <ellipse cx="157" cy="118" rx="3" ry="5" fill="#1a130a" opacity="0.85"/>
-              <!-- Tonal overlay for aged look -->
-              <rect width="280" height="210" fill="rgba(180,100,30,0.1)"/>
-            </svg>
+      <div class="reveal" style="transition-delay: 0.2s;">
+        <p class="section-label">The Arc</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <h4>May — The Harbor at Peace</h4>
+              <p>Five brothers scrape by on scraps from the yacht docks. Life is hard but the harbor is theirs.</p>
+            </div>
           </div>
-          <div class="polaroid-caption">last evening at the dock</div>
-        </div>
-
-        <!-- Polaroid 2 -->
-        <div class="polaroid">
-          <div class="polaroid-img">
-            <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#5a8fa8"/>
-                  <stop offset="100%" stop-color="#e8d5a8" stop-opacity="0.7"/>
-                </linearGradient>
-              </defs>
-              <rect width="280" height="210" fill="url(#sky2)"/>
-              <!-- Beach -->
-              <ellipse cx="140" cy="200" rx="180" ry="50" fill="#c8a060" opacity="0.9"/>
-              <ellipse cx="140" cy="210" rx="180" ry="50" fill="#b08040"/>
-              <!-- Boat -->
-              <path d="M80 130 Q140 120 200 130 L195 150 Q140 160 85 150 Z" fill="#3a2810" opacity="0.9"/>
-              <rect x="137" y="105" width="3" height="30" fill="#5a4a30"/>
-              <path d="M140 107 L165 118 L140 122 Z" fill="#e8d5a8" opacity="0.75"/>
-              <!-- Water -->
-              <rect y="130" width="280" height="80" fill="rgba(44,95,122,0.5)"/>
-              <!-- Tonal overlay -->
-              <rect width="280" height="210" fill="rgba(140,100,40,0.12)"/>
-            </svg>
+          <div class="timeline-item">
+            <div class="tl-dot" style="background: #c05030; box-shadow: 0 0 8px rgba(192,80,48,0.5);"></div>
+            <div class="tl-content">
+              <h4>June — The Pirates Strike</h4>
+              <p>Theodore, William, Worcestershire, Colonel Sanders, Caesar & Daquavius raid the harbor. Gold and tea taken.</p>
+            </div>
           </div>
-          <div class="polaroid-caption">the old rowboat, july</div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <h4>July — Fortify &amp; Plan</h4>
+              <p>The boys fortify. Street informant L Wizzy surfaces with intel: the pirates are moving the goods.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot" style="background: #f59e0b; box-shadow: 0 0 8px rgba(245,158,11,0.5);"></div>
+            <div class="tl-content">
+              <h4>October — The Reckoning</h4>
+              <p>Bro's and Co. Wrecking balls. A military tank. The warehouse becomes history. The Harbor Boys walk away.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== CAST ===== -->
+<!-- CAST -->
 <section class="cast-section" id="cast">
   <div class="filmstrip-border">
     <div class="filmstrip-holes">
       <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
   </div>
-  <div class="section-inner" style="padding-top: 60px; padding-bottom: 0;">
-    <p class="section-label reveal">The Cast</p>
-    <h2 class="reveal" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 40px); font-weight: 400; color: var(--cream); margin-bottom: 0;">The boys of Cape Harrow.</h2>
+  <div class="section-inner" style="padding-top: 56px; padding-bottom: 40px;">
+    <p class="section-label reveal">The Brothers</p>
+    <h2 class="section-title reveal">Five sons of the harbor.</h2>
   </div>
   <div class="cast-grid">
-    <!-- Cast members -->
     <div class="cast-card reveal">
       <div class="cast-avatar">
-        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
-          <rect width="72" height="72" fill="#1a3045"/>
-          <circle cx="36" cy="28" r="14" fill="#2c5f7a"/>
-          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#2c5f7a"/>
+        <svg viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
+          <rect width="68" height="68" fill="#1a3045"/>
+          <circle cx="34" cy="26" r="13" fill="#2c5f7a"/>
+          <ellipse cx="34" cy="58" rx="19" ry="13" fill="#2c5f7a"/>
         </svg>
       </div>
-      <div class="cast-name">Danny Calloway</div>
-      <div class="cast-role">The Dreamer</div>
+      <div class="cast-name">Michael</div>
+      <div class="cast-role">The Leader</div>
     </div>
-    <div class="cast-card reveal" style="transition-delay: 0.1s;">
+    <div class="cast-card reveal" style="transition-delay:0.07s;">
       <div class="cast-avatar">
-        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
-          <rect width="72" height="72" fill="#2a1e10"/>
-          <circle cx="36" cy="28" r="14" fill="#7a5c3a"/>
-          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#7a5c3a"/>
+        <svg viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
+          <rect width="68" height="68" fill="#1e2e1e"/>
+          <circle cx="34" cy="26" r="13" fill="#3a6040"/>
+          <ellipse cx="34" cy="58" rx="19" ry="13" fill="#3a6040"/>
         </svg>
       </div>
-      <div class="cast-name">Marco Vieira</div>
-      <div class="cast-role">The Anchor</div>
+      <div class="cast-name">Liam</div>
+      <div class="cast-role">The Heart</div>
     </div>
-    <div class="cast-card reveal" style="transition-delay: 0.2s;">
+    <div class="cast-card reveal" style="transition-delay:0.14s;">
       <div class="cast-avatar">
-        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
-          <rect width="72" height="72" fill="#1e2e1e"/>
-          <circle cx="36" cy="28" r="14" fill="#3a6040"/>
-          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#3a6040"/>
+        <svg viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
+          <rect width="68" height="68" fill="#2a1e10"/>
+          <circle cx="34" cy="26" r="13" fill="#7a5c3a"/>
+          <ellipse cx="34" cy="58" rx="19" ry="13" fill="#7a5c3a"/>
         </svg>
       </div>
-      <div class="cast-name">Eli Fontaine</div>
-      <div class="cast-role">The Quiet One</div>
+      <div class="cast-name">Kyle</div>
+      <div class="cast-role">The Strategist</div>
     </div>
-    <div class="cast-card reveal" style="transition-delay: 0.3s;">
+    <div class="cast-card reveal" style="transition-delay:0.21s;">
       <div class="cast-avatar">
-        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
-          <rect width="72" height="72" fill="#2e1a10"/>
-          <circle cx="36" cy="28" r="14" fill="#a05030"/>
-          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#a05030"/>
+        <svg viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
+          <rect width="68" height="68" fill="#2e1a10"/>
+          <circle cx="34" cy="26" r="13" fill="#a05030"/>
+          <ellipse cx="34" cy="58" rx="19" ry="13" fill="#a05030"/>
         </svg>
       </div>
-      <div class="cast-name">Robbie Sands</div>
-      <div class="cast-role">The Wild Heart</div>
+      <div class="cast-name">Sean</div>
+      <div class="cast-role">The Muscle</div>
+    </div>
+    <div class="cast-card reveal" style="transition-delay:0.28s;">
+      <div class="cast-avatar">
+        <svg viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
+          <rect width="68" height="68" fill="#1c1a2e"/>
+          <circle cx="34" cy="26" r="13" fill="#5040a0"/>
+          <ellipse cx="34" cy="58" rx="19" ry="13" fill="#5040a0"/>
+        </svg>
+      </div>
+      <div class="cast-name">Benjamin</div>
+      <div class="cast-role">The Wild Card</div>
     </div>
   </div>
-  <div class="filmstrip-border" style="margin-top: 0; margin-bottom: 0;">
+  <div class="filmstrip-border">
     <div class="filmstrip-holes">
       <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
   </div>
 </section>
 
-<!-- ===== QUOTE ===== -->
-<section class="quote-section">
-  <div class="quote-inner reveal">
-    <div class="big-quote">The kind of film that reminds you what summer once smelled like — brine and woodsmoke and borrowed time.</div>
-    <div class="stars">★★★★½</div>
-    <div class="quote-attr">— The Atlantic Film Review</div>
+<!-- PIRATES -->
+<section class="pirates-section" id="pirates">
+  <div class="section-inner">
+    <div class="pirates-header reveal">
+      <div class="skull-emblem">☠</div>
+      <div>
+        <p class="section-label">The Villains</p>
+        <h2 class="section-title" style="margin-bottom: 0; color: #f0c0a0;">Know your enemy.</h2>
+      </div>
+    </div>
+    <p class="reveal" style="font-size: 18px; line-height: 1.8; color: rgba(245,200,180,0.65); max-width: 640px; margin-bottom: 3rem;">Six pirates. No morals. They came for gold and tea — and planned to trade it all for cash money 🤑 in a sketchy warehouse deal they thought nobody would ever find out about.</p>
+    <div class="pirates-grid reveal" style="transition-delay: 0.1s;">
+      <div class="pirate-card">
+        <div class="pirate-initial">T</div>
+        <div class="pirate-name">Theodore</div>
+        <div class="pirate-tag">The Ringleader</div>
+      </div>
+      <div class="pirate-card">
+        <div class="pirate-initial">W</div>
+        <div class="pirate-name">William</div>
+        <div class="pirate-tag">The Brute</div>
+      </div>
+      <div class="pirate-card">
+        <div class="pirate-initial">W</div>
+        <div class="pirate-name">Worcestershire</div>
+        <div class="pirate-tag">The Strange One</div>
+      </div>
+      <div class="pirate-card">
+        <div class="pirate-initial">C</div>
+        <div class="pirate-name">Colonel Sanders</div>
+        <div class="pirate-tag">The Schemer</div>
+      </div>
+      <div class="pirate-card">
+        <div class="pirate-initial">C</div>
+        <div class="pirate-name">Caesar</div>
+        <div class="pirate-tag">The Pretender</div>
+      </div>
+      <div class="pirate-card">
+        <div class="pirate-initial">D</div>
+        <div class="pirate-name">Daquavius</div>
+        <div class="pirate-tag">The Enforcer</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ===== FILM DETAILS ===== -->
+<!-- STORY ACTS -->
+<section class="acts-section" id="acts">
+  <div class="section-inner" style="padding-bottom: 40px;">
+    <p class="section-label reveal">The Film</p>
+    <h2 class="section-title reveal">Four acts. One legendary summer.</h2>
+  </div>
+  <div class="acts-grid">
+    <div class="act-card reveal">
+      <div class="act-number">I</div>
+      <div class="act-label">Act One</div>
+      <h3 class="act-title">Life on the Harbor</h3>
+      <p class="act-body">Michael, Liam, Kyle, Sean, and Benjamin have always lived this way — five poor brothers on a harbor their ancestors claimed in the year 201. They eat scraps from the wealthy yachts that pass through. It isn't much. But the harbor is theirs, and always has been.</p>
+    </div>
+    <div class="act-card reveal" style="transition-delay: 0.1s; background: linear-gradient(135deg, #120808 0%, #200c0c 100%);">
+      <div class="act-number" style="color: rgba(200,80,60,0.06);">II</div>
+      <div class="act-label" style="color: #c06050;">Act Two — The Raid</div>
+      <h3 class="act-title" style="color: #f0b0a0;">The Pirates Strike</h3>
+      <p class="act-body">Theodore and his crew descend on the harbor and take everything: the gold, the tea, the pride. The Harbor Boys fortify what remains and vow not just vengeance — but <em>fury</em>. They want power. They want it all back, and then some.</p>
+    </div>
+    <div class="act-card reveal" style="transition-delay: 0.05s;">
+      <div class="act-number">III</div>
+      <div class="act-label">Act Three — The Intel</div>
+      <h3 class="act-title">L Wizzy Speaks</h3>
+      <p class="act-body">Word comes in from L Wizzy — a street-goer who knows everybody's business. The pirates are at an abandoned warehouse, mid-sketchy-trade, moving the stolen gold and tea for cold hard cash 🤑. The window is open. But only just.</p>
+    </div>
+    <div class="act-card explosive reveal" style="transition-delay: 0.15s;">
+      <div class="act-number" style="color: rgba(240,150,60,0.07);">IV</div>
+      <div class="act-label">Act Four — The Reckoning</div>
+      <h3 class="act-title">Bro's and Co. &amp; The Tank</h3>
+      <p class="act-body">The Harbor Boys call in Bro's and Co. construction. Wrecking balls swing. They tip off the military: illegal activity, confirmed. A tank rolls up and opens fire. The warehouse detonates in a wall of light and fury. The Harbor Boys turn their backs on the inferno and walk away — slowly — into whatever comes next.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INTEL SIDEBAR -->
+<section class="intel-section">
+  <div class="section-inner">
+    <p class="section-label reveal">Key Players</p>
+    <h2 class="section-title reveal">The allies who made it possible.</h2>
+    <div class="intel-grid reveal" style="transition-delay: 0.1s;">
+      <div class="intel-card" data-tag="Street Intel">
+        <h3>L Wizzy</h3>
+        <p>The Harbor Boys' eyes on the streets. L Wizzy knows where the bodies are buried — or in this case, where the stolen tea and gold are getting traded. His tip changed everything.</p>
+      </div>
+      <div class="intel-card" data-tag="Construction">
+        <h3>Bro's and Co.</h3>
+        <p>The construction company that answered the call. Wrecking balls don't ask questions. When the Harbor Boys said destroy it, Bro's and Co. showed up and swung.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JA MORANT QUOTE -->
+<section class="quote-section">
+  <div class="quote-inner reveal">
+    <div class="big-quote">Hi, this is my favorite movie.</div>
+    <div class="stars">★★★★★</div>
+    <div class="quote-attr">— Ja Morant, NBA All-Star &amp; Certified Harbor Boys Fan</div>
+  </div>
+</section>
+
+<!-- SLOW MO WALK -->
+<section class="slowmo-section" id="finale">
+  <div class="slowmo-inner">
+    <p class="section-label reveal">The Finale</p>
+    <h2 class="section-title reveal">They walked away. <em>Slowly.</em></h2>
+    <p class="reveal" style="font-size: 18px; line-height: 1.8; color: rgba(245,237,216,0.6); margin-top: -0.5rem; margin-bottom: 0; transition-delay: 0.1s;">The building exploded. The pirates were no more. The gold — recovered. The tea — recovered. The Harbor Boys turned their backs to the fire and went wherever the wind took them. They killed their enemies. But the real lesson was the friends they made along the way.</p>
+    <div class="explosion-scene reveal" style="transition-delay: 0.2s;">
+      <svg viewBox="0 0 680 297" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="explo" cx="75%" cy="55%" r="35%">
+            <stop offset="0%" stop-color="#fff7d0" stop-opacity="0.9"/>
+            <stop offset="20%" stop-color="#f59e0b" stop-opacity="0.7"/>
+            <stop offset="50%" stop-color="#c05020" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0a0804" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a1e10"/>
+            <stop offset="100%" stop-color="#0a0804"/>
+          </linearGradient>
+          <linearGradient id="sky-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a0804"/>
+            <stop offset="60%" stop-color="#1a1008"/>
+            <stop offset="100%" stop-color="#2a1e10"/>
+          </linearGradient>
+        </defs>
+        <!-- Sky -->
+        <rect width="680" height="297" fill="url(#sky-dark)"/>
+        <!-- Explosion glow -->
+        <ellipse cx="510" cy="160" rx="200" ry="130" fill="url(#explo)" opacity="0.85"/>
+        <!-- Debris -->
+        <line x1="490" y1="130" x2="520" y2="90" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+        <line x1="510" y1="120" x2="555" y2="80" stroke="#fde68a" stroke-width="1.5" opacity="0.5"/>
+        <line x1="470" y1="140" x2="440" y2="95" stroke="#f59e0b" stroke-width="1" opacity="0.4"/>
+        <rect x="505" y="85" width="8" height="8" fill="#c05020" opacity="0.6" transform="rotate(30 509 89)"/>
+        <rect x="545" y="75" width="6" height="6" fill="#f59e0b" opacity="0.5" transform="rotate(-20 548 78)"/>
+        <rect x="460" y="100" width="5" height="10" fill="#c05020" opacity="0.4" transform="rotate(15 462 105)"/>
+        <!-- Building ruins -->
+        <rect x="460" y="200" width="110" height="60" fill="#1a0e06" opacity="0.9"/>
+        <rect x="480" y="180" width="30" height="24" fill="#1a0e06" opacity="0.8"/>
+        <rect x="525" y="185" width="25" height="20" fill="#1a0e06" opacity="0.8"/>
+        <rect x="495" y="195" width="15" height="8" fill="#c05020" opacity="0.4"/>
+        <!-- Ground -->
+        <rect x="0" y="240" width="680" height="57" fill="url(#ground)"/>
+        <!-- Five silhouettes walking away, backs to explosion -->
+        <!-- Benjamin (leftmost) -->
+        <g opacity="0.95">
+          <ellipse cx="72" cy="218" rx="9" ry="11" fill="#1a130a"/>
+          <rect x="65" y="229" width="14" height="26" fill="#1a130a" rx="2"/>
+          <line x1="65" y1="234" x2="58" y2="250" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="79" y1="234" x2="85" y2="249" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="68" y1="255" x2="63" y2="272" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="76" y1="255" x2="79" y2="272" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Sean -->
+        <g opacity="0.95">
+          <ellipse cx="148" cy="215" rx="10" ry="12" fill="#1a130a"/>
+          <rect x="140" y="227" width="16" height="28" fill="#1a130a" rx="2"/>
+          <line x1="140" y1="232" x2="132" y2="249" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="156" y1="232" x2="163" y2="248" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="143" y1="255" x2="138" y2="274" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="153" y1="255" x2="157" y2="274" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Kyle (center) -->
+        <g opacity="0.95">
+          <ellipse cx="230" cy="212" rx="11" ry="13" fill="#1a130a"/>
+          <rect x="221" y="225" width="18" height="30" fill="#1a130a" rx="2"/>
+          <line x1="221" y1="230" x2="212" y2="248" stroke="#1a130a" stroke-width="5" stroke-linecap="round"/>
+          <line x1="239" y1="230" x2="247" y2="247" stroke="#1a130a" stroke-width="5" stroke-linecap="round"/>
+          <line x1="224" y1="255" x2="219" y2="276" stroke="#1a130a" stroke-width="5" stroke-linecap="round"/>
+          <line x1="236" y1="255" x2="240" y2="276" stroke="#1a130a" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <!-- Liam -->
+        <g opacity="0.95">
+          <ellipse cx="308" cy="214" rx="10" ry="12" fill="#1a130a"/>
+          <rect x="300" y="226" width="16" height="29" fill="#1a130a" rx="2"/>
+          <line x1="300" y1="231" x2="292" y2="248" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="316" y1="231" x2="323" y2="247" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="303" y1="255" x2="298" y2="274" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="313" y1="255" x2="317" y2="274" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Michael (rightmost, closest to explosion) -->
+        <g opacity="0.95">
+          <ellipse cx="385" cy="213" rx="10" ry="12" fill="#1a130a"/>
+          <rect x="377" y="225" width="16" height="29" fill="#1a130a" rx="2"/>
+          <line x1="377" y1="230" x2="369" y2="247" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="393" y1="230" x2="400" y2="246" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="380" y1="254" x2="375" y2="273" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+          <line x1="390" y1="254" x2="394" y2="273" stroke="#1a130a" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Smoke wisps -->
+        <ellipse cx="510" cy="100" rx="40" ry="25" fill="#2a1e10" opacity="0.5"/>
+        <ellipse cx="545" cy="75" rx="30" ry="20" fill="#2a1e10" opacity="0.35"/>
+        <ellipse cx="490" cy="88" rx="20" ry="14" fill="#3a2810" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FILM DETAILS -->
 <section class="details-section" id="details">
   <div class="section-inner">
     <p class="section-label reveal">Film Details</p>
-    <h2 class="reveal" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 38px); font-weight: 400; color: var(--cream);">About the production.</h2>
-    <div class="details-grid reveal" style="transition-delay: 0.15s;">
+    <h2 class="section-title reveal">About the production.</h2>
+    <div class="details-grid reveal" style="transition-delay: 0.1s;">
       <div class="detail-cell">
-        <div class="detail-label">Directed by</div>
-        <div class="detail-value">James R. Callahan<small>also written by</small></div>
+        <div class="detail-label">The Harbor Boys</div>
+        <div class="detail-value">Michael, Liam, Kyle<small>Sean &amp; Benjamin</small></div>
       </div>
       <div class="detail-cell">
-        <div class="detail-label">Genre</div>
-        <div class="detail-value">Coming-of-Age<small>Drama / Nostalgia</small></div>
+        <div class="detail-label">The Pirates</div>
+        <div class="detail-value">Theodore &amp; Crew<small>William · Worcestershire · Col. Sanders · Caesar · Daquavius</small></div>
       </div>
       <div class="detail-cell">
-        <div class="detail-label">Release</div>
-        <div class="detail-value">August 3, 2001<small>Limited & Wide Release</small></div>
+        <div class="detail-label">Setting</div>
+        <div class="detail-value">The Harbor<small>Est. Year 201 · Their birthright</small></div>
       </div>
       <div class="detail-cell">
-        <div class="detail-label">Cinematography</div>
-        <div class="detail-value">Sofia Arnett<small>16mm Film</small></div>
+        <div class="detail-label">Informant</div>
+        <div class="detail-value">L Wizzy<small>Street intelligence, unmatched</small></div>
       </div>
       <div class="detail-cell">
-        <div class="detail-label">Music by</div>
-        <div class="detail-value">Thomas Hearn<small>Original Score</small></div>
+        <div class="detail-label">Demolition</div>
+        <div class="detail-value">Bro's and Co.<small>Wrecking balls furnished</small></div>
       </div>
       <div class="detail-cell">
-        <div class="detail-label">Runtime</div>
-        <div class="detail-value">1 hr 48 min<small>Rated PG-13</small></div>
+        <div class="detail-label">Timeline</div>
+        <div class="detail-value">May — October<small>2001 · Rated R</small></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== TRAILER ===== -->
-<section class="trailer-section" id="trailer">
-  <div class="section-inner">
-    <p class="section-label reveal">Official Trailer</p>
-    <h2 class="reveal" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 38px); font-weight: 400; color: var(--cream);">See it on the big screen.</h2>
-    <div class="trailer-frame reveal" style="transition-delay: 0.1s;">
-      <div class="trailer-placeholder">
-        <div class="play-btn">
-          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><polygon points="5,2 18,10 5,18"/></svg>
-        </div>
-        <div class="trailer-label">Play Trailer &nbsp;·&nbsp; 2:24</div>
-      </div>
-      <div class="scanlines"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-logo">Harbor Boys · 2001</div>
   <nav class="footer-links">
-    <a href="#">Synopsis</a>
-    <a href="#">Cast & Crew</a>
-    <a href="#">Gallery</a>
-    <a href="#">Showtimes</a>
-    <a href="#">Press Kit</a>
-    <a href="#">Contact</a>
+    <a href="#about">Synopsis</a>
+    <a href="#cast">The Brothers</a>
+    <a href="#pirates">The Pirates</a>
+    <a href="#acts">The Story</a>
+    <a href="#finale">The Finale</a>
+    <a href="#">harborboys2001.org</a>
   </nav>
-  <p class="footer-copy">© 2001 Harbor Boys Productions. All rights reserved. &nbsp;·&nbsp; harborboys2001.org</p>
+  <p class="footer-copy">© 2001 Harbor Boys Productions. &nbsp;·&nbsp; harborboys2001.org &nbsp;·&nbsp; "The real lesson was the friends we made along the way."</p>
 </footer>
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
 
-  document.querySelector('.trailer-frame').addEventListener('click', function() {
-    this.querySelector('.trailer-label').textContent = 'Trailer coming soon...';
-  });
-
-  document.querySelector('[href="#trailer"]').addEventListener('click', e => {
-    e.preventDefault();
-    document.getElementById('trailer').scrollIntoView({ behavior: 'smooth' });
-  });
-  document.querySelector('[href="#about"]').addEventListener('click', e => {
-    e.preventDefault();
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
   });
 </script>
 </body>
