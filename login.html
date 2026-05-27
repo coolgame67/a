@@ -5,29 +5,54 @@
     <title>Loading...</title>
 
     <script>
-        function encodeHTML(str) {
-            return str.replace(/&/g, '&amp;')
-                     .replace(/</g, '&lt;')
-                     .replace(/>/g, '&gt;')
-                     .replace(/"/g, '&quot;')
-                     .replace(/'/g, '&#039;');
-        }
+        // Block right click
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        });
 
-        function decodeHTML(str) {
-            return str.replace(/&amp;/g, '&')
-                      .replace(/&lt;/g, '<')
-                      .replace(/&gt;/g, '>')
-                      .replace(/&quot;/g, '"')
-                      .replace(/&#039;/g, "'");
-        }
+        // Block inspect / shortcuts
+        document.addEventListener("keydown", function (e) {
+
+            // F12
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+
+            // Ctrl+Shift+I / J / C (Windows/Linux)
+            if (e.ctrlKey && e.shiftKey) {
+                const k = e.key.toLowerCase();
+                if (k === "i" || k === "j" || k === "c") {
+                    e.preventDefault();
+                }
+            }
+
+            // Ctrl+U (view source)
+            if (e.ctrlKey && e.key.toLowerCase() === "u") {
+                e.preventDefault();
+            }
+
+            // Ctrl+Shift+K (Firefox console)
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "k") {
+                e.preventDefault();
+            }
+
+            // Mac Cmd + Option + I/J/C/U
+            if (e.metaKey && e.altKey) {
+                const k = e.key.toLowerCase();
+                if (["i", "j", "c", "u"].includes(k)) {
+                    e.preventDefault();
+                }
+            }
+
+        });
 
         var encoded =
-encodeHTML("PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlencodeHTML("PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04I4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Ciod3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Cioge2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjB9CmJvZHl7YmFja2dyb3VuZDp#");
+"PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIG"PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Cioge2JveC1zaXvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Cioge2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjB9CmJvZHl7YmFja2dyb3VuZDp#";
 
         var html = atob(encoded);
 
         document.open();
-        document.write(decodeHTML(html));
+        document.write(html);
         document.close();
 
     </script>
