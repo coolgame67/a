@@ -5,9 +5,46 @@
 <title>Loading...</title>
 
 <script>
-document.addEventListener("contextmenu", e => e.preventDefault());
-    
-    
+// Block right click
+document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+});
+
+// Block inspect / shortcuts
+document.addEventListener("keydown", function (e) {
+
+    // F12
+    if (e.key === "F12") {
+        e.preventDefault();
+    }
+
+    // Ctrl+Shift+I / J / C (Windows/Linux)
+    if (e.ctrlKey && e.shiftKey) {
+        const k = e.key.toLowerCase();
+        if (k === "i" || k === "j" || k === "c") {
+            e.preventDefault();
+        }
+    }
+
+    // Ctrl+U (view source)
+    if (e.ctrlKey && e.key.toLowerCase() === "u") {
+        e.preventDefault();
+    }
+
+    // Ctrl+Shift+K (Firefox console)
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+    }
+
+    // Mac Cmd + Option + I/J/C/U
+    if (e.metaKey && e.altKey) {
+        const k = e.key.toLowerCase();
+        if (["i", "j", "c", "u"].includes(k)) {
+            e.preventDefault();
+        }
+    }
+
+});
 </script>
 
 </head>
