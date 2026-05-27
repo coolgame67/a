@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harbor Boys — Summer 2001</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5edd8;
+    --sand: #e8d5a8;
+    --warm-brown: #7a5c3a;
+    --dark-brown: #3a2810;
+    --ocean-blue: #2c5f7a;
+    --faded-blue: #5a8fa8;
+    --sunset-orange: #c8622a;
+    --film-grain: rgba(180,140,80,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #1a130a;
+    color: var(--cream);
+    font-family: 'EB Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  /* Film grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(
+      180deg,
+      #0d0a06 0%,
+      #1a2535 25%,
+      #2c4a5e 45%,
+      #c8862a 65%,
+      #e8a040 75%,
+      #d4752a 82%,
+      #3a2810 92%,
+      #1a130a 100%
+    );
+  }
+
+  /* Ocean horizon effect */
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 35%;
+    background: linear-gradient(180deg, transparent 0%, #0d0a08 70%);
+    pointer-events: none;
+  }
+
+  /* Sun disc */
+  .sun {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fde68a 0%, #f59e0b 40%, #d97706 70%, #b45309 100%);
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 60px 20px rgba(251,191,36,0.3), 0 0 120px 60px rgba(217,119,6,0.15);
+    opacity: 0.9;
+  }
+
+  /* Water shimmer */
+  .water {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 32%;
+    background: linear-gradient(
+      180deg,
+      rgba(44,95,122,0.4) 0%,
+      rgba(26,56,74,0.7) 40%,
+      rgba(13,26,36,0.9) 100%
+    );
+  }
+
+  .water-lines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+  }
+
+  .water-lines::before,
+  .water-lines::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: rgba(253,230,138,0.15);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  .water-lines::before { top: 20%; animation-delay: 0s; }
+  .water-lines::after  { top: 50%; animation-delay: 1.5s; }
+
+  @keyframes shimmer {
+    0%,100% { opacity: 0.1; transform: scaleX(0.8) translateX(5%); }
+    50%      { opacity: 0.4; transform: scaleX(1.05) translateX(-2%); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 20px;
+    animation: fadeInUp 1.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .rating-badge {
+    display: inline-block;
+    border: 1.5px solid var(--sand);
+    color: var(--sand);
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 2rem;
+    opacity: 0.75;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 160px);
+    letter-spacing: 0.08em;
+    line-height: 0.9;
+    color: var(--cream);
+    text-shadow: 2px 4px 30px rgba(0,0,0,0.6);
+    margin-bottom: 0.1em;
+  }
+
+  .hero-title span {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3.5vw, 42px);
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    color: var(--sand);
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+    opacity: 0.85;
+  }
+
+  .hero-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(18px, 3vw, 32px);
+    letter-spacing: 0.5em;
+    color: var(--faded-blue);
+    opacity: 0.8;
+    margin-top: 0.4em;
+  }
+
+  .hero-tagline {
+    font-style: italic;
+    font-size: clamp(16px, 2.2vw, 22px);
+    color: var(--sand);
+    opacity: 0.7;
+    margin-top: 1.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 32px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--sunset-orange);
+    color: var(--cream);
+    box-shadow: 0 0 30px rgba(200,98,42,0.3);
+  }
+  .btn-primary:hover {
+    background: #d97040;
+    box-shadow: 0 0 40px rgba(200,98,42,0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--sand);
+    border: 1px solid rgba(232,213,168,0.4);
+  }
+  .btn-outline:hover {
+    border-color: var(--sand);
+    background: rgba(232,213,168,0.08);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.45;
+    animation: bob 2.5s ease-in-out infinite;
+  }
+  .scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sand);
+  }
+  .scroll-hint svg { width: 16px; height: 20px; fill: none; stroke: var(--sand); stroke-width: 1.5; }
+  @keyframes bob {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ---- SECTION BASE ---- */
+  section { position: relative; }
+
+  .section-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--faded-blue);
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+  }
+
+  /* ---- ABOUT ---- */
+  .about {
+    background: #110e07;
+    border-top: 1px solid rgba(232,213,168,0.08);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .about-synopsis h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-synopsis h2 em {
+    font-style: italic;
+    color: var(--sand);
+  }
+
+  .about-synopsis p {
+    font-size: 18px;
+    line-height: 1.85;
+    color: rgba(245,237,216,0.75);
+    margin-bottom: 1.2rem;
+  }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--sunset-orange);
+    margin: 2rem 0;
+    opacity: 0.6;
+  }
+
+  /* Polaroid-style stills */
+  .stills {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .polaroid {
+    background: #f0e8d5;
+    padding: 12px 12px 40px;
+    transform: rotate(-2deg);
+    box-shadow: 4px 6px 20px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+
+  .polaroid:nth-child(2) { transform: rotate(1.5deg); align-self: flex-end; width: 80%; }
+  .polaroid:nth-child(3) { transform: rotate(-1deg); align-self: center; width: 70%; }
+
+  .polaroid:hover { transform: rotate(0deg) scale(1.02) !important; z-index: 10; }
+
+  .polaroid-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--ocean-blue);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .polaroid-img svg { width: 100%; height: 100%; }
+
+  .polaroid-caption {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #5a4a30;
+    text-align: center;
+    margin-top: 8px;
+    position: absolute;
+    bottom: 10px;
+    left: 0; right: 0;
+  }
+
+  /* ---- FILMSTRIP / CAST ---- */
+  .cast-section {
+    background: #0d0a06;
+    overflow: hidden;
+  }
+
+  .filmstrip-border {
+    height: 28px;
+    background: #1a1209;
+    border-top: 2px solid #2a2015;
+    border-bottom: 2px solid #2a2015;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .filmstrip-holes {
+    display: flex;
+    gap: 0;
+    width: 100%;
+  }
+
+  .filmstrip-holes span {
+    display: inline-block;
+    width: 20px;
+    height: 14px;
+    background: #0d0a06;
+    border-radius: 3px;
+    margin: 0 6px;
+    flex-shrink: 0;
+  }
+
+  .cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0;
+  }
+
+  .cast-card {
+    padding: 40px 24px;
+    border-right: 1px solid rgba(232,213,168,0.06);
+    text-align: center;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .cast-card:last-child { border-right: none; }
+  .cast-card:hover { background: rgba(232,213,168,0.04); }
+
+  .cast-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--ocean-blue);
+    margin: 0 auto 16px;
+    overflow: hidden;
+    border: 2px solid rgba(90,143,168,0.3);
+  }
+
+  .cast-avatar svg { width: 100%; height: 100%; }
+
+  .cast-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .cast-role {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: rgba(245,237,216,0.45);
+    text-transform: uppercase;
+  }
+
+  /* ---- QUOTE ---- */
+  .quote-section {
+    background: var(--ocean-blue);
+    background: linear-gradient(135deg, #1a2e3e 0%, #0f1e28 50%, #1a2535 100%);
+    border-top: 1px solid rgba(90,143,168,0.2);
+    border-bottom: 1px solid rgba(90,143,168,0.2);
+  }
+
+  .quote-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 44px);
+    line-height: 1.4;
+    color: var(--cream);
+    position: relative;
+  }
+
+  .big-quote::before {
+    content: '\201C';
+    font-size: 8em;
+    color: rgba(90,143,168,0.15);
+    position: absolute;
+    top: -0.3em;
+    left: -0.1em;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .quote-attr {
+    margin-top: 2rem;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--faded-blue);
+    opacity: 0.7;
+  }
+
+  .stars {
+    margin: 1.5rem 0 0.5rem;
+    color: #f59e0b;
+    font-size: 18px;
+    letter-spacing: 4px;
+  }
+
+  /* ---- DETAILS ---- */
+  .details-section {
+    background: #110e07;
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(232,213,168,0.08);
+    border: 1px solid rgba(232,213,168,0.08);
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 580px) {
+    .details-grid { grid-template-columns: 1fr; }
+    .cast-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .detail-cell {
+    background: #110e07;
+    padding: 32px 28px;
+  }
+
+  .detail-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--faded-blue);
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .detail-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .detail-value small {
+    display: block;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: rgba(245,237,216,0.5);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ---- TRAILER ---- */
+  .trailer-section {
+    background: #0a0804;
+  }
+
+  .trailer-frame {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    margin: 3rem auto 0;
+    aspect-ratio: 16/9;
+    background: #1a2535;
+    border: 1px solid rgba(90,143,168,0.2);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .trailer-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f1e28 0%, #1a3045 50%, #0f1e28 100%);
+    gap: 16px;
+  }
+
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(245,237,216,0.5);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+  }
+
+  .trailer-frame:hover .play-btn {
+    border-color: var(--cream);
+    background: rgba(245,237,216,0.1);
+    transform: scale(1.1);
+  }
+
+  .play-btn svg { width: 20px; height: 20px; fill: var(--cream); margin-left: 3px; }
+
+  .trailer-label {
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,237,216,0.5);
+  }
+
+  /* Scan line effect */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: #0a0804;
+    border-top: 1px solid rgba(232,213,168,0.07);
+    padding: 60px 24px 40px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.15em;
+    color: var(--sand);
+    opacity: 0.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,237,216,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(245,237,216,0.7); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(245,237,216,0.2);
+    letter-spacing: 0.08em;
+  }
+
+  /* Vignette helper */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Fade-in on scroll utility */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="sun"></div>
+  <div class="water">
+    <div class="water-lines"></div>
+  </div>
+  <div class="vignette"></div>
+
+  <div class="hero-content">
+    <div class="rating-badge">PG-13 &nbsp;·&nbsp; 1 hr 48 min &nbsp;·&nbsp; Drama</div>
+    <h1 class="hero-title">
+      <span>A Film About</span>
+      Harbor Boys
+    </h1>
+    <div class="hero-year">Summer &nbsp;·&nbsp; 2001</div>
+    <p class="hero-tagline">Some summers last forever.</p>
+    <div class="hero-cta">
+      <a href="#trailer" class="btn btn-primary">Watch Trailer</a>
+      <a href="#about" class="btn btn-outline">Discover the Film</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg viewBox="0 0 16 20"><path d="M8 1v14M2 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-synopsis reveal">
+        <p class="section-label">The Story</p>
+        <h2>Five boys. One <em>last summer</em> before everything changes.</h2>
+        <div class="divider"></div>
+        <p>Somewhere along the sun-bleached docks of Cape Harrow, four teenage boys share their final summer together before the world pulls them apart. Between salt air and small confessions, they learn what it means to hold on — and when to let go.</p>
+        <p>Harbor Boys is a tender, unhurried portrait of friendship at the edge of adolescence, where every evening bonfire feels like a farewell and every morning tide brings the future a little closer.</p>
+        <div style="margin-top: 2.5rem; display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="#" class="btn btn-primary" style="font-size:13px; padding: 10px 24px;">Find Showtimes</a>
+          <a href="#" class="btn btn-outline" style="font-size:13px; padding: 10px 24px;">Now on Home Video</a>
+        </div>
+      </div>
+
+      <div class="stills reveal" style="transition-delay: 0.2s;">
+        <!-- Polaroid 1 -->
+        <div class="polaroid">
+          <div class="polaroid-img">
+            <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1a2535"/>
+                  <stop offset="60%" stop-color="#c8622a" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#e8a040"/>
+                </linearGradient>
+                <linearGradient id="sea1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2c5f7a" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#0d1e28"/>
+                </linearGradient>
+              </defs>
+              <rect width="280" height="210" fill="url(#sky1)"/>
+              <ellipse cx="140" cy="105" rx="30" ry="30" fill="#f59e0b" opacity="0.9"/>
+              <rect y="126" width="280" height="84" fill="url(#sea1)"/>
+              <line x1="0" y1="136" x2="280" y2="134" stroke="rgba(253,230,138,0.2)" stroke-width="1.5"/>
+              <line x1="0" y1="150" x2="280" y2="148" stroke="rgba(253,230,138,0.1)" stroke-width="1"/>
+              <!-- Dock silhouette -->
+              <rect x="100" y="118" width="80" height="8" fill="#1a130a" opacity="0.8" rx="1"/>
+              <rect x="118" y="118" width="5" height="20" fill="#1a130a" opacity="0.8"/>
+              <rect x="155" y="118" width="5" height="20" fill="#1a130a" opacity="0.8"/>
+              <!-- Figures -->
+              <ellipse cx="128" cy="117" rx="4" ry="6" fill="#1a130a" opacity="0.85"/>
+              <ellipse cx="142" cy="115" rx="4" ry="7" fill="#1a130a" opacity="0.85"/>
+              <ellipse cx="157" cy="118" rx="3" ry="5" fill="#1a130a" opacity="0.85"/>
+              <!-- Tonal overlay for aged look -->
+              <rect width="280" height="210" fill="rgba(180,100,30,0.1)"/>
+            </svg>
+          </div>
+          <div class="polaroid-caption">last evening at the dock</div>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="polaroid">
+          <div class="polaroid-img">
+            <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5a8fa8"/>
+                  <stop offset="100%" stop-color="#e8d5a8" stop-opacity="0.7"/>
+                </linearGradient>
+              </defs>
+              <rect width="280" height="210" fill="url(#sky2)"/>
+              <!-- Beach -->
+              <ellipse cx="140" cy="200" rx="180" ry="50" fill="#c8a060" opacity="0.9"/>
+              <ellipse cx="140" cy="210" rx="180" ry="50" fill="#b08040"/>
+              <!-- Boat -->
+              <path d="M80 130 Q140 120 200 130 L195 150 Q140 160 85 150 Z" fill="#3a2810" opacity="0.9"/>
+              <rect x="137" y="105" width="3" height="30" fill="#5a4a30"/>
+              <path d="M140 107 L165 118 L140 122 Z" fill="#e8d5a8" opacity="0.75"/>
+              <!-- Water -->
+              <rect y="130" width="280" height="80" fill="rgba(44,95,122,0.5)"/>
+              <!-- Tonal overlay -->
+              <rect width="280" height="210" fill="rgba(140,100,40,0.12)"/>
+            </svg>
+          </div>
+          <div class="polaroid-caption">the old rowboat, july</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CAST ===== -->
+<section class="cast-section" id="cast">
+  <div class="filmstrip-border">
+    <div class="filmstrip-holes">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="section-inner" style="padding-top: 60px; padding-bottom: 0;">
+    <p class="section-label reveal">The Cast</p>
+    <h2 class="reveal" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 40px); font-weight: 400; color: var(--cream); margin-bottom: 0;">The boys of Cape Harrow.</h2>
+  </div>
+  <div class="cast-grid">
+    <!-- Cast members -->
+    <div class="cast-card reveal">
+      <div class="cast-avatar">
+        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" fill="#1a3045"/>
+          <circle cx="36" cy="28" r="14" fill="#2c5f7a"/>
+          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#2c5f7a"/>
+        </svg>
+      </div>
+      <div class="cast-name">Danny Calloway</div>
+      <div class="cast-role">The Dreamer</div>
+    </div>
+    <div class="cast-card reveal" style="transition-delay: 0.1s;">
+      <div class="cast-avatar">
+        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" fill="#2a1e10"/>
+          <circle cx="36" cy="28" r="14" fill="#7a5c3a"/>
+          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#7a5c3a"/>
+        </svg>
+      </div>
+      <div class="cast-name">Marco Vieira</div>
+      <div class="cast-role">The Anchor</div>
+    </div>
+    <div class="cast-card reveal" style="transition-delay: 0.2s;">
+      <div class="cast-avatar">
+        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" fill="#1e2e1e"/>
+          <circle cx="36" cy="28" r="14" fill="#3a6040"/>
+          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#3a6040"/>
+        </svg>
+      </div>
+      <div class="cast-name">Eli Fontaine</div>
+      <div class="cast-role">The Quiet One</div>
+    </div>
+    <div class="cast-card reveal" style="transition-delay: 0.3s;">
+      <div class="cast-avatar">
+        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" fill="#2e1a10"/>
+          <circle cx="36" cy="28" r="14" fill="#a05030"/>
+          <ellipse cx="36" cy="60" rx="20" ry="14" fill="#a05030"/>
+        </svg>
+      </div>
+      <div class="cast-name">Robbie Sands</div>
+      <div class="cast-role">The Wild Heart</div>
+    </div>
+  </div>
+  <div class="filmstrip-border" style="margin-top: 0; margin-bottom: 0;">
+    <div class="filmstrip-holes">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUOTE ===== -->
+<section class="quote-section">
+  <div class="quote-inner reveal">
+    <div class="big-quote">The kind of film that reminds you what summer once smelled like — brine and woodsmoke and borrowed time.</div>
+    <div class="stars">★★★★½</div>
+    <div class="quote-attr">— The Atlantic Film Review</div>
+  </div>
+</section>
+
+<!-- ===== FILM DETAILS ===== -->
+<section class="details-section" id="details">
+  <div class="section-inner">
+    <p class="section-label reveal">Film Details</p>
+    <h2 class="reveal" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 38px); font-weight: 400; color: var(--cream);">About the production.</h2>
+    <div class="details-grid reveal" style="transition-delay: 0.15s;">
+      <div class="detail-cell">
+        <div class="detail-label">Directed by</div>
+        <div class="detail-value">James R. Callahan<small>also written by</small></div>
+      </div>
+      <div class="detail-cell">
+        <div class="detail-label">Genre</div>
+        <div class="detail-value">Coming-of-Age<small>Drama / Nostalgia</small></div>
+      </div>
+      <div class="detail-cell">
+        <div class="detail-label">Release</div>
+        <div class="detail-value">August 3, 2001<small>Limited & Wide Release</small></div>
+      </div>
+      <div class="detail-cell">
+        <div class="detail-label">Cinematography</div>
+        <div class="detail-value">Sofia Arnett<small>16mm Film</small></div>
+      </div>
+      <div class="detail-cell">
+        <div class="detail-label">Music by</div>
+        <div class="detail-value">Thomas Hearn<small>Original Score</small></div>
+      </div>
+      <div class="detail-cell">
+        <div class="detail-label">Runtime</div>
+        <div class="detail-value">1 hr 48 min<small>Rated PG-13</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRAILER ===== -->
+<section class="trailer-section" id="trailer">
+  <div class="section-inner">
+    <p class="section-label reveal">Official Trailer</p>
+    <h2 class="reveal" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 38px); font-weight: 400; color: var(--cream);">See it on the big screen.</h2>
+    <div class="trailer-frame reveal" style="transition-delay: 0.1s;">
+      <div class="trailer-placeholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><polygon points="5,2 18,10 5,18"/></svg>
+        </div>
+        <div class="trailer-label">Play Trailer &nbsp;·&nbsp; 2:24</div>
+      </div>
+      <div class="scanlines"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-logo">Harbor Boys · 2001</div>
+  <nav class="footer-links">
+    <a href="#">Synopsis</a>
+    <a href="#">Cast & Crew</a>
+    <a href="#">Gallery</a>
+    <a href="#">Showtimes</a>
+    <a href="#">Press Kit</a>
+    <a href="#">Contact</a>
+  </nav>
+  <p class="footer-copy">© 2001 Harbor Boys Productions. All rights reserved. &nbsp;·&nbsp; harborboys2001.org</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  document.querySelector('.trailer-frame').addEventListener('click', function() {
+    this.querySelector('.trailer-label').textContent = 'Trailer coming soon...';
+  });
+
+  document.querySelector('[href="#trailer"]').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('trailer').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.querySelector('[href="#about"]').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
