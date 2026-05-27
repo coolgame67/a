@@ -1,84 +1,272 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Loading...</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Harbor Boys Admin</title>
 
-    <script>
-        // Block right click
-        document.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-        });
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
 
-        // Block inspect / shortcuts
-        document.addEventListener("keydown", function (e) {
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-            // F12
-            if (e.key === "F12") {
-                e.preventDefault();
-            }
+body {
+  background: #0a0804;
+  color: #f5edd8;
+  font-family: "EB Garamond", serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-            // Ctrl+Shift+I / J / C (Windows/Linux)
-            if (e.ctrlKey && e.shiftKey) {
-                const k = e.key.toLowerCase();
-                if (k === "i" || k === "j" || k === "c") {
-                    e.preventDefault();
-                }
-            }
+/* container */
+.login-wrap {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 24px;
+  animation: fadeUp 0.8s ease forwards;
+}
 
-            // Ctrl+U (view source)
-            if (e.ctrlKey && e.key.toLowerCase() === "u") {
-                e.preventDefault();
-            }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-            // Ctrl+Shift+K (Firefox console)
-            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "k") {
-                e.preventDefault();
-            }
+.logo {
+  text-align: center;
+  font-size: 52px;
+  letter-spacing: 0.08em;
+}
 
-            // Mac Cmd + Option + I/J/C/U
-            if (e.metaKey && e.altKey) {
-                const k = e.key.toLowerCase();
-                if (["i", "j", "c", "u"].includes(k)) {
-                    e.preventDefault();
-                }
-            }
+.sub {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #5a8fa8;
+  margin-bottom: 48px;
+  opacity: 0.8;
+}
 
-        });
+/* card */
+.card {
+  background: #110e07;
+  border: 1px solid rgba(232,213,168,0.1);
+  padding: 40px 36px;
+}
 
+.card-title {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #5a8fa8;
+  margin-bottom: 28px;
+}
 
-    </script>
+/* fields */
+.field {
+  margin-bottom: 20px;
+}
 
+label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,237,216,0.45);
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 11px 14px;
+  background: #0a0804;
+  border: 1px solid rgba(232,213,168,0.15);
+  color: #f5edd8;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  border-color: rgba(90,143,168,0.6);
+}
+
+/* password toggle */
+.pw-wrap {
+  position: relative;
+}
+
+.pw-wrap input {
+  padding-right: 42px;
+}
+
+.toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: rgba(245,237,216,0.5);
+}
+
+.toggle:hover {
+  color: rgba(245,237,216,0.8);
+}
+
+/* button */
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 4px;
+  background: #c8622a;
+  border: none;
+  color: #f5edd8;
+  font-size: 14px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #d97040;
+}
+
+/* error */
+.error {
+  color: #c05050;
+  font-size: 13px;
+  margin-bottom: 12px;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.error.show {
+  opacity: 1;
+}
+
+/* shake */
+.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 24px;
+  font-size: 12px;
+  color: rgba(245,237,216,0.25);
+  text-decoration: none;
+}
+</style>
 </head>
+
 <body>
+
+<div class="login-wrap" id="card">
+
+  <div class="logo">Harbor Boys</div>
+  <div class="sub">Admin Portal • 2001</div>
+
+  <div class="card">
+
+    <div class="card-title">Restricted Access</div>
+
+    <div class="error" id="error">Incorrect username or password.</div>
+
+    <div class="field">
+      <label>Username</label>
+      <input id="username" type="text" autocomplete="off" />
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <div class="pw-wrap">
+        <input id="password" type="password" autocomplete="off" />
+        <button class="toggle" id="toggle">👁</button>
+      </div>
+    </div>
+
+    <button id="loginBtn">Enter</button>
+
+  </div>
+
+  <a class="back" href="index.html">← Back</a>
+</div>
+
 <script>
-(function(){
-var _0xb2f4='PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+SGFyYm9yIEJveXMg4oCUIEFkbWluPC90aXRsZT4KPGxpbmsgaHJlZj0iaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1CZWJhcytOZXVlJmZhbWlseT1FQitHYXJhbW9uZDppdGFsLHdnaHRAMCw0MDA7MCw1MDA7MSw0MDAmZGlzcGxheT1zd2FwIiByZWw9InN0eWxlc2hlZXQiPgo8c3R5bGU+CiAgKiwgKjo6YmVmb3JlLCAqOjphZnRlciB7IGJveC1zaXppbmc6IGJvcmRlci1ib3g7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgfQoKICBib2R5IHsKICAgIGJhY2tncm91bmQ6ICMwYTA4MDQ7CiAgICBjb2xvcjogI2Y1ZWRkODsKICAgIGZvbnQtZmFtaWx5OiAnRUIgR2FyYW1vbmQnLCBzZXJpZjsKICAgIG1pbi1oZWlnaHQ6IDEwMHZoOwogICAgZGlzcGxheTogZmxleDsKICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgICBhbGlnbi1pdGVtczogY2VudGVyOwogICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7CiAgICBvdmVyZmxvdzogaGlkZGVuOwogIH0KCiAgYm9keTo6YmVmb3JlIHsKICAgIGNvbnRlbnQ6ICcnOwogICAgcG9zaXRpb246IGZpeGVkOyBpbnNldDogMDsKICAgIGJhY2tncm91bmQ6IHJhZGlhbC1ncmFkaWVudChlbGxpcHNlIGF0IGNlbnRlciwgIzFhMjUzNSAwJSwgIzBhMDgwNCA3MCUpOwogICAgei1pbmRleDogMDsKICB9CgogIC5sb2dpbi13cmFwIHsKICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsgei1pbmRleDogMTA7CiAgICB3aWR0aDogMTAwJTsgbWF4LXdpZHRoOiA0MDBweDsKICAgIHBhZGRpbmc6IDAgMjRweDsKICAgIGFuaW1hdGlvbjogZmFkZVVwIDFzIGVhc2UgZm9yd2FyZHM7CiAgfQoKICBAa2V5ZnJhbWVzIGZhZGVVcCB7CiAgICBmcm9tIHsgb3BhY2l0eTogMDsgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDI0cHgpOyB9CiAgICB0byAgIHsgb3BhY2l0eTogMTsgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApOyB9CiAgfQoKICAubG9nbyB7CiAgICBmb250LWZhbWlseTogJ0JlYmFzIE5ldWUnLCBzYW5zLXNlcmlmOwogICAgZm9udC1zaXplOiA1MnB4OwogICAgbGV0dGVyLXNwYWNpbmc6IDAuMDhlbTsKICAgIGNvbG9yOiAjZjVlZGQ4OwogICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgbGluZS1oZWlnaHQ6IDE7CiAgICBtYXJnaW4tYm90dG9tOiA0cHg7CiAgfQoKICAubG9nby1zdWIgewogICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgZm9udC1zaXplOiAxMXB4OwogICAgbGV0dGVyLXNwYWNpbmc6IDAuMzVlbTsKICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7CiAgICBjb2xvcjogIzVhOGZhODsKICAgIG1hcmdpbi1ib3R0b206IDQ4cHg7CiAgICBvcGFjaXR5OiAwLjg7CiAgfQoKICAuY2FyZCB7CiAgICBiYWNrZ3JvdW5kOiAjMTEwZTA3OwogICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyMzIsMjEzLDE2OCwwLjEpOwogICAgcGFkZGluZzogNDBweCAzNnB4OwogIH0KCiAgLmNhcmQtdGl0bGUgewogICAgZm9udC1zaXplOiAxMXB4OwogICAgbGV0dGVyLXNwYWNpbmc6IDAuM2VtOwogICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTsKICAgIGNvbG9yOiAjNWE4ZmE4OwogICAgbWFyZ2luLWJvdHRvbTogMjhweDsKICAgIG9wYWNpdHk6IDAuODsKICB9CgogIC5maWVsZCB7IG1hcmdpbi1ib3R0b206IDIwcHg7IH0KCiAgLmZpZWxkIGxhYmVsIHsKICAgIGRpc3BsYXk6IGJsb2NrOwogICAgZm9udC1zaXplOiAxMXB4OwogICAgbGV0dGVyLXNwYWNpbmc6IDAuMmVtOwogICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTsKICAgIGNvbG9yOiByZ2JhKDI0NSwyMzcsMjE2LDAuNDUpOwogICAgbWFyZ2luLWJvdHRvbTogOHB4OwogIH0KCiAgLmZpZWxkIGlucHV0IHsKICAgIHdpZHRoOiAxMDAlOwogICAgYmFja2dyb3VuZDogIzBhMDgwNDsKICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjMyLDIxMywxNjgsMC4xNSk7CiAgICBjb2xvcjogI2Y1ZWRkODsKICAgIGZvbnQtZmFtaWx5OiAnRUIgR2FyYW1vbmQnLCBzZXJpZjsKICAgIGZvbnQtc2l6ZTogMTdweDsKICAgIHBhZGRpbmc6IDExcHggMTRweDsKICAgIG91dGxpbmU6IG5vbmU7CiAgICB0cmFuc2l0aW9uOiBib3JkZXItY29sb3IgMC4yNXM7CiAgICBib3JkZXItcmFkaXVzOiAwOwogICAgLXdlYmtpdC1hcHBlYXJhbmNlOiBub25lOwogIH0KCiAgLmZpZWxkIGlucHV0OmZvY3VzIHsgYm9yZGVyLWNvbG9yOiByZ2JhKDkwLDE0MywxNjgsMC42KTsgfQogIC5maWVsZCBpbnB1dDo6cGxhY2Vob2xkZXIgeyBjb2xvcjogcmdiYSgyNDUsMjM3LDIxNiwwLjIpOyB9CgogIC8qIFBhc3N3b3JkIHdyYXBwZXIgd2l0aCB0b2dnbGUgKi8KICAucHctd3JhcCB7IHBvc2l0aW9uOiByZWxhdGl2ZTsgfQogIC5wdy13cmFwIGlucHV0IHsgcGFkZGluZy1yaWdodDogNDZweDsgfQoKICAucHctdG9nZ2xlIHsKICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsgcmlnaHQ6IDEycHg7IHRvcDogNTAlOwogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpOwogICAgYmFja2dyb3VuZDogbm9uZTsgYm9yZGVyOiBub25lOwogICAgY3Vyc29yOiBwb2ludGVyOyBwYWRkaW5nOiA0cHg7CiAgICBjb2xvcjogcmdiYSgyNDUsMjM3LDIxNiwwLjMpOwogICAgdHJhbnNpdGlvbjogY29sb3IgMC4yczsKICAgIGxpbmUtaGVpZ2h0OiAxOwogIH0KICAucHctdG9nZ2xlOmhvdmVyIHsgY29sb3I6IHJnYmEoMjQ1LDIzNywyMTYsMC43KTsgfQogIC5wdy10b2dnbGUgc3ZnIHsgd2lkdGg6IDE4cHg7IGhlaWdodDogMThweDsgZGlzcGxheTogYmxvY2s7IGZpbGw6IG5vbmU7IHN0cm9rZTogY3VycmVudENvbG9yOyBzdHJva2Utd2lkdGg6IDEuNjsgc3Ryb2tlLWxpbmVjYXA6IHJvdW5kOyBzdHJva2UtbGluZWpvaW46IHJvdW5kOyB9CgogIC5lcnJvci1tc2cgewogICAgZm9udC1zaXplOiAxM3B4OwogICAgY29sb3I6ICNjMDUwNTA7CiAgICBsZXR0ZXItc3BhY2luZzogMC4wNWVtOwogICAgbWFyZ2luLWJvdHRvbTogMTZweDsKICAgIG1pbi1oZWlnaHQ6IDE4cHg7CiAgICBmb250LXN0eWxlOiBpdGFsaWM7CiAgICBvcGFjaXR5OiAwOwogICAgdHJhbnNpdGlvbjogb3BhY2l0eSAwLjNzOwogIH0KICAuZXJyb3ItbXNnLnNob3cgeyBvcGFjaXR5OiAxOyB9CgogIC5zdWJtaXQtYnRuIHsKICAgIHdpZHRoOiAxMDAlOwogICAgYmFja2dyb3VuZDogI2M4NjIyYTsKICAgIGNvbG9yOiAjZjVlZGQ4OwogICAgYm9yZGVyOiBub25lOwogICAgZm9udC1mYW1pbHk6ICdFQiBHYXJhbW9uZCcsIHNlcmlmOwogICAgZm9udC1zaXplOiAxNHB4OwogICAgbGV0dGVyLXNwYWNpbmc6IDAuMjVlbTsKICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7CiAgICBwYWRkaW5nOiAxM3B4OwogICAgY3Vyc29yOiBwb2ludGVyOwogICAgdHJhbnNpdGlvbjogYmFja2dyb3VuZCAwLjI1cywgdHJhbnNmb3JtIDAuMTVzOwogICAgbWFyZ2luLXRvcDogNHB4OwogIH0KICAuc3VibWl0LWJ0bjpob3ZlciB7IGJhY2tncm91bmQ6ICNkOTcwNDA7IH0KICAuc3VibWl0LWJ0bjphY3RpdmUgeyB0cmFuc2Zvcm06IHNjYWxlKDAuOTgpOyB9CgogIC5iYWNrLWxpbmsgewogICAgZGlzcGxheTogYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsKICAgIG1hcmdpbi10b3A6IDI0cHg7CiAgICBmb250LXNpemU6IDEycHg7IGxldHRlci1zcGFjaW5nOiAwLjE4ZW07IHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7CiAgICBjb2xvcjogcmdiYSgyNDUsMjM3LDIxNiwwLjI1KTsgdGV4dC1kZWNvcmF0aW9uOiBub25lOwogICAgdHJhbnNpdGlvbjogY29sb3IgMC4yczsKICB9CiAgLmJhY2stbGluazpob3ZlciB7IGNvbG9yOiByZ2JhKDI0NSwyMzcsMjE2LDAuNik7IH0KCiAgLyogc2hha2UgYW5pbWF0aW9uIG9uIHdyb25nIHB3ICovCiAgQGtleWZyYW1lcyBzaGFrZSB7CiAgICAwJSwxMDAlIHsgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDApOyB9CiAgICAyMCUgICAgICB7IHRyYW5zZm9ybTogdHJhbnNsYXRlWCgtOHB4KTsgfQogICAgNDAlICAgICAgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoOHB4KTsgfQogICAgNjAlICAgICAgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoLTVweCk7IH0KICAgIDgwJSAgICAgIHsgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDVweCk7IH0KICB9CiAgLnNoYWtlIHsgYW5pbWF0aW9uOiBzaGFrZSAwLjRzIGVhc2U7IH0KPC9zdHlsZT4KPC9oZWFkPgo8Ym9keT4KCjxkaXYgY2xhc3M9ImxvZ2luLXdyYXAiPgogIDxkaXYgY2xhc3M9ImxvZ28iPkhhcmJvciBCb3lzPC9kaXY+CiAgPGRpdiBjbGFzcz0ibG9nby1zdWIiPkFkbWluIFBvcnRhbCAmbmJzcDvCtyZuYnNwOyAyMDAxPC9kaXY+CgogIDxkaXYgY2xhc3M9ImNhcmQiIGlkPSJsb2dpbkNhcmQiPgogICAgPGRpdiBjbGFzcz0iY2FyZC10aXRsZSI+UmVzdHJpY3RlZCBBY2Nlc3M8L2Rpdj4KCiAgICA8ZGl2IGNsYXNzPSJmaWVsZCI+CiAgICAgIDxsYWJlbCBmb3I9InVzZXJuYW1lIj5Vc2VybmFtZTwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0idXNlcm5hbWUiIHBsYWNlaG9sZGVyPSJFbnRlciB1c2VybmFtZSIgYXV0b2NvbXBsZXRlPSJvZmYiIHNwZWxsY2hlY2s9ImZhbHNlIj4KICAgIDwvZGl2PgoKICAgIDxkaXYgY2xhc3M9ImZpZWxkIj4KICAgICAgPGxhYmVsIGZvcj0icGFzc3dvcmQiPlBhc3N3b3JkPC9sYWJlbD4KICAgICAgPGRpdiBjbGFzcz0icHctd3JhcCI+CiAgICAgICAgPGlucHV0IHR5cGU9InBhc3N3b3JkIiBpZD0icGFzc3dvcmQiIHBsYWNlaG9sZGVyPSJFbnRlciBwYXNzd29yZCIgYXV0b2NvbXBsZXRlPSJvZmYiPgogICAgICAgIDxidXR0b24gY2xhc3M9InB3LXRvZ2dsZSIgaWQ9InB3VG9nZ2xlIiB0eXBlPSJidXR0b24iIGFyaWEtbGFiZWw9IlRvZ2dsZSBwYXNzd29yZCB2aXNpYmlsaXR5Ij4KICAgICAgICAgIDwhLS0gRXllIGljb24gKHNob3duIHdoZW4gcGFzc3dvcmQgaXMgaGlkZGVuKSAtLT4KICAgICAgICAgIDxzdmcgaWQ9Imljb25FeWUiIHZpZXdCb3g9IjAgMCAyNCAyNCI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0xIDEyczQtOCAxMS04IDExIDggMTEgOC00IDgtMTEgOC0xMS04LTExLTh6Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiLz4KICAgICAgICAgIDwvc3ZnPgogICAgICAgICAgPCEtLSBFeWUtb2ZmIGljb24gKHNob3duIHdoZW4gcGFzc3dvcmQgaXMgdmlzaWJsZSkgLS0+CiAgICAgICAgICA8c3ZnIGlkPSJpY29uRXllT2ZmIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHN0eWxlPSJkaXNwbGF5Om5vbmU7Ij4KICAgICAgICAgICAgPHBhdGggZD0iTTE3Ljk0IDE3Ljk0QTEwLjA3IDEwLjA3IDAgMCAxIDEyIDIwYy03IDAtMTEtOC0xMS04YTE4LjQ1IDE4LjQ1IDAgMCAxIDUuMDYtNS45NCIvPgogICAgICAgICAgICA8cGF0aCBkPSJNOS45IDQuMjRBOS4xMiA5LjEyIDAgMCAxIDEyIDRjNyAwIDExIDggMTEgOGExOC41IDE4LjUgMCAwIDEtMi4xNiAzLjE5Ii8+CiAgICAgICAgICAgIDxsaW5lIHgxPSIxIiB5MT0iMSIgeDI9IjIzIiB5Mj0iMjMiLz4KICAgICAgICAgIDwvc3ZnPgogICAgICAgIDwvYnV0dG9uPgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgoKICAgIDxkaXYgY2xhc3M9ImVycm9yLW1zZyIgaWQ9ImVycm9yTXNnIj5JbmNvcnJlY3QgdXNlcm5hbWUgb3IgcGFzc3dvcmQuPC9kaXY+CgogICAgPGJ1dHRvbiBjbGFzcz0ic3VibWl0LWJ0biIgaWQ9ImxvZ2luQnRuIj5FbnRlcjwvYnV0dG9uPgogIDwvZGl2PgoKICA8YSBocmVmPSJpbmRleC5odG1sIiBjbGFzcz0iYmFjay1saW5rIj7ihpAgQmFjayB0byBIYXJib3IgQm95czwvYT4KPC9kaXY+CgoKPC9ib2R5Pgo8L2h0bWw+Cg==';
-var _0x9c3a=atob(_0xb2f4);
-document.open();document.write(_0x9c3a);document.close();
-})();
-</script><script>
-(function(_0xd3f1,_0x2b8c){
-var _0x2f8b=function(_0xc3d){return _0xc3d.map(function(_0x4e1){return String.fromCharCode(_0x4e1);}).join('');};
-var _0x9a4c=[97,100,109,105,110];
-var _0x7b3e=[100,101,97,100,108,121,100,101,99,105,115,105,111,110,115];
-var _0x6d1f=[103,97,109,101,46,104,116,109,108];
-var _0xaa12=[104,98,95,97,117,116,104];
-var _0xbb34=[49];
-var _0xe2a8=document.getElementById('username');
-var _0xf1c7=document.getElementById('password');
-var _0xb4d9=document.getElementById('loginBtn');
-var _0xa3f6=document.getElementById('errorMsg');
-var _0xc8e1=document.getElementById('pwToggle');
-var _0x5d2b=document.getElementById('iconEye');
-var _0x4a9f=document.getElementById('iconEyeOff');
-var _0x3b7c=document.getElementById('loginCard');
-_0xc8e1.addEventListener('click',function(){var _0x1e4d=_0xf1c7.type==='password';_0xf1c7.type=_0x1e4d?'text':'password';_0x5d2b.style.display=_0x1e4d?'none':'block';_0x4a9f.style.display=_0x1e4d?'block':'none';_0xf1c7.focus();});
-function _0x8c5a(){var _0x2e9d=_0xe2a8.value.trim();var _0x7f1b=_0xf1c7.value;if(_0x2e9d===_0x2f8b(_0x9a4c)&&_0x7f1b===_0x2f8b(_0x7b3e)){sessionStorage.setItem(_0x2f8b(_0xaa12),_0x2f8b(_0xbb34));_0xb4d9.textContent='Access Granted...';_0xb4d9.style.background='#2a6040';_0xa3f6.classList.remove('show');setTimeout(function(){window.location.href=_0x2f8b(_0x6d1f);},700);}else{_0xa3f6.classList.add('show');_0x3b7c.classList.remove('shake');void _0x3b7c.offsetWidth;_0x3b7c.classList.add('shake');_0xf1c7.value='';_0xf1c7.focus();}}
-_0xb4d9.addEventListener('click',_0x8c5a);
-[_0xe2a8,_0xf1c7].forEach(function(_0x4d2c){_0x4d2c.addEventListener('keydown',function(_0x6f3b){if(_0x6f3b.key==='Enter')_0x8c5a();});});
-[_0xe2a8,_0xf1c7].forEach(function(_0x4d2c){_0x4d2c.addEventListener('input',function(){_0xa3f6.classList.remove('show');});});
-})([],[]);
+document.addEventListener("DOMContentLoaded", () => {
+
+  const username = document.getElementById("username");
+  const password = document.getElementById("password");
+  const toggle = document.getElementById("toggle");
+  const btn = document.getElementById("loginBtn");
+  const error = document.getElementById("error");
+  const card = document.getElementById("card");
+
+  // CHANGE THESE
+  const VALID_USER = "admin";
+  const VALID_PASS = "deadlydecisionss";
+
+  // toggle password
+  toggle.addEventListener("click", () => {
+    const isHidden = password.type === "password";
+    password.type = isHidden ? "text" : "password";
+    toggle.textContent = isHidden ? "🙈" : "👁";
+  });
+
+  function login() {
+    const u = username.value.trim();
+    const p = password.value;
+
+    if (u === VALID_USER && p === VALID_PASS) {
+      btn.textContent = "Access Granted...";
+      btn.style.background = "#2a6040";
+
+      setTimeout(() => {
+        window.location.href = "game.html";
+      }, 600);
+
+    } else {
+      error.classList.add("show");
+      card.classList.remove("shake");
+      void card.offsetWidth;
+      card.classList.add("shake");
+
+      password.value = "";
+      password.focus();
+    }
+  }
+
+  btn.addEventListener("click", login);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") login();
+  });
+
+  [username, password].forEach(el => {
+    el.addEventListener("input", () => {
+      error.classList.remove("show");
+    });
+  });
+
+});
 </script>
+
 </body>
 </html>
