@@ -1,184 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harbor Boys Admin</title>
+
   <script>
-    if (localStorage.getItem("loggedIn") !== "true") {
-        window.location.href = "login.html";
+    // If already logged in, skip the login screen and go straight to the game
+    if (localStorage.getItem("hb_auth") === "true") {
+        window.location.href = "game.html";
     }
-</script>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Harbor Boys Admin</title>
+  </script>
 
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://googleapis.com" rel="stylesheet">
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  background: #0a0804;
-  color: #f5edd8;
-  font-family: "EB Garamond", serif;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    body {
+      background: #0a0804;
+      color: #f5edd8;
+      font-family: "EB Garamond", serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-/* container */
-.login-wrap {
-  width: 100%;
-  max-width: 400px;
-  padding: 0 24px;
-  animation: fadeUp 0.8s ease forwards;
-}
+    /* container */
+    .login-wrap {
+      width: 100%;
+      max-width: 400px;
+      padding: 0 24px;
+      animation: fadeUp 0.8s ease forwards;
+    }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-.logo {
-  text-align: center;
-  font-size: 52px;
-  letter-spacing: 0.08em;
-}
+    .logo {
+      text-align: center;
+      font-size: 52px;
+      letter-spacing: 0.08em;
+    }
 
-.sub {
-  text-align: center;
-  font-size: 11px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: #5a8fa8;
-  margin-bottom: 48px;
-  opacity: 0.8;
-}
+    .sub {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #5a8fa8;
+      margin-bottom: 48px;
+      opacity: 0.8;
+    }
 
-/* card */
-.card {
-  background: #110e07;
-  border: 1px solid rgba(232,213,168,0.1);
-  padding: 40px 36px;
-}
+    /* card */
+    .card {
+      background: #110e07;
+      border: 1px solid rgba(232,213,168,0.1);
+      padding: 40px 36px;
+    }
 
-.card-title {
-  font-size: 11px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: #5a8fa8;
-  margin-bottom: 28px;
-}
+    .card-title {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #5a8fa8;
+      margin-bottom: 28px;
+    }
 
-/* fields */
-.field {
-  margin-bottom: 20px;
-}
+    /* fields */
+    .field {
+      margin-bottom: 20px;
+    }
 
-label {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(245,237,216,0.45);
-  margin-bottom: 8px;
-}
+    label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,237,216,0.45);
+      margin-bottom: 8px;
+    }
 
-input {
-  width: 100%;
-  padding: 11px 14px;
-  background: #0a0804;
-  border: 1px solid rgba(232,213,168,0.15);
-  color: #f5edd8;
-  font-size: 16px;
-  outline: none;
-}
+    input {
+      width: 100%;
+      padding: 11px 14px;
+      background: #0a0804;
+      border: 1px solid rgba(232,213,168,0.15);
+      color: #f5edd8;
+      font-size: 16px;
+      outline: none;
+    }
 
-input:focus {
-  border-color: rgba(90,143,168,0.6);
-}
+    input:focus {
+      border-color: rgba(90,143,168,0.6);
+    }
 
-/* password toggle */
-.pw-wrap {
-  position: relative;
-}
+    /* password toggle */
+    .pw-wrap {
+      position: relative;
+    }
 
-.pw-wrap input {
-  padding-right: 42px;
-}
+    .pw-wrap input {
+      padding-right: 42px;
+    }
 
-.toggle {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: rgba(245,237,216,0.5);
-}
+    .toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: rgba(245,237,216,0.5);
+    }
 
-.toggle:hover {
-  color: rgba(245,237,216,0.8);
-}
+    .toggle:hover {
+      color: rgba(245,237,216,0.8);
+    }
 
-/* button */
-button {
-  width: 100%;
-  padding: 13px;
-  margin-top: 4px;
-  background: #c8622a;
-  border: none;
-  color: #f5edd8;
-  font-size: 14px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    /* button */
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 4px;
+      background: #c8622a;
+      border: none;
+      color: #f5edd8;
+      font-size: 14px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-button:hover {
-  background: #d97040;
-}
+    button:hover {
+      background: #d97040;
+    }
 
-/* error */
-.error {
-  color: #c05050;
-  font-size: 13px;
-  margin-bottom: 12px;
-  opacity: 0;
-  transition: 0.2s;
-}
+    /* error */
+    .error {
+      color: #c05050;
+      font-size: 13px;
+      margin-bottom: 12px;
+      opacity: 0;
+      transition: 0.2s;
+    }
 
-.error.show {
-  opacity: 1;
-}
+    .error.show {
+      opacity: 1;
+    }
 
-/* shake */
-.shake {
-  animation: shake 0.4s ease;
-}
+    /* shake */
+    .shake {
+      animation: shake 0.4s ease;
+    }
 
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  20% { transform: translateX(-8px); }
-  40% { transform: translateX(8px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: translateX(5px); }
-}
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
 
-.back {
-  display: block;
-  text-align: center;
-  margin-top: 24px;
-  font-size: 12px;
-  color: rgba(245,237,216,0.25);
-  text-decoration: none;
-}
-</style>
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: rgba(245,237,216,0.25);
+      text-decoration: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -224,11 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const error = document.getElementById("error");
   const card = document.getElementById("card");
 
-  // CHANGE THESE
   const VALID_USER = "admin";
   const VALID_PASS = "deadlydecisionss";
 
-  // toggle password
   toggle.addEventListener("click", () => {
     const isHidden = password.type === "password";
     password.type = isHidden ? "text" : "password";
@@ -240,6 +240,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const p = password.value;
 
     if (u === VALID_USER && p === VALID_PASS) {
+      // Authenticate user
+      localStorage.setItem("hb_auth", "true");
+      
       btn.textContent = "Access Granted...";
       btn.style.background = "#2a6040";
 
@@ -250,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       error.classList.add("show");
       card.classList.remove("shake");
-      void card.offsetWidth;
+      void card.offsetWidth; // Trigger layout reflow to restart animation
       card.classList.add("shake");
 
       password.value = "";
