@@ -80,7 +80,225 @@
     <h1>Admin Game Terminal</h1>
     <p>Welcome back, Admin. System initialized.</p>
     
-    <!-- Game interface goes here -->
+        <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Launcher Panel</title>
+    <style>
+      /* CSS Variables for easier theming and consistency */
+      :root {
+          --background-color: #111;
+          --button-bg-color: #222;
+          --button-border-color: #444;
+          --button-hover-bg-color: #333;
+          --button-hover-border-color: #666;
+          --text-color: white;
+          --gap-large: 20px;
+          --gap-medium: 15px;
+          --button-padding: 15px 20px;
+          --font-size-base: 16px;
+          --border-radius: 6px;
+          --transition-speed: 0.2s;
+          --button-width: 280px;
+      }
+
+      body {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: var(--gap-large);
+          min-height: 100vh;
+          background: var(--background-color);
+          margin: 0;
+          font-family: Arial, sans-serif;
+          color: var(--text-color); /* Ensure text color is set */
+      }
+
+      .btn-container {
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-medium);
+          width: var(--button-width);
+      }
+
+      button {
+          padding: var(--button-padding);
+          font-size: var(--font-size-base);
+          font-weight: bold;
+          color: var(--text-color);
+          background: var(--button-bg-color);
+          border: 2px solid var(--button-border-color);
+          border-radius: var(--border-radius);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          text-align: center; /* Ensure text is centered */
+      }
+
+      button:hover {
+          background: var(--button-hover-bg-color);
+          border-color: var(--button-hover-border-color);
+      }
+
+      /* Style for potential error messages if needed, though alerts are used */
+      .error-message {
+          color: #ff6b6b;
+          font-weight: bold;
+          margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="btn-container">
+      <!-- Buttons will be dynamically generated or kept static -->
+      <!-- Example: Dynamically generated buttons -->
+      <!-- <div id="button-list"></div> -->
+    </div>
+
+    <script>
+      // Configuration object for game launchers
+      const gameLaunchers = [
+          {
+              id: 'blossom',
+              label: '#1 Blossom Games',
+              url: 'https://cdn.jsdelivr.net/gh/blossom-games/blossomgames@latest/blossomsinglefile.html',
+              corsRequired: false // Explicitly state if CORS proxy is needed
+          },
+          {
+              id: 'gn-math',
+              label: '#2 GN Math',
+              url: 'https://cdn.jsdelivr.net/npm/gn-math.github.io-main@1.0.5/singlefile.html',
+              corsRequired: false
+          },
+          {
+              id: 'gn-math-alt',
+              label: '#3 GN Math Alt',
+              // This URL is routed through a CORS proxy wrapper
+              url: 'https://gist.githubusercontent.com/coolgame67/59d6a8b124e82fba41bed018d8aade56/raw/492db0757bd03c3b3dd04ec65fdc0f0a7297258b/gistfile1.html',
+              corsRequired: false // This one requires a proxy
+          }
+      ];
+
+      /**
+       * Opens a new blank window and writes the provided HTML content into it.
+       * @param {string} htmlContent - The HTML content to write.
+       * @param {string} windowTitle - The title for the new window.
+       * @returns {Window|null} The opened window object or null if blocked.
+       */
+      function launchDirect(htmlContent, windowTitle = 'Game Window') {
+          const blankWindow = window.open('about:blank', '_blank');
+          if (!blankWindow) {
+              // More user-friendly error message for popup blockers
+              alert('Popup blocked! Please allow popups for this site to launch games.');
+              return null;
+          }
+          try {
+              // Ensure the document is ready before writing
+              blankWindow.document.open();
+              blankWindow.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${windowTitle}</title></head><body>${htmlContent}</body></html>`);
+              blankWindow.document.close();
+              // Optional: Focus the new window
+              blankWindow.focus();
+          } catch (e) {
+              console.error("Error writing to new window:", e);
+              alert(`Failed to display game content. Error: ${e.message}`);
+              blankWindow.close(); // Close the window if writing fails
+              return null;
+          }
+          return blankWindow;
+      }
+
+      /**
+       * Fetches HTML content from a URL and launches it.
+       * Handles CORS proxying if required.
+       * @param {object} launcherConfig - Configuration object for the launcher.
+       */
+      async function fetchAndLaunch(launcherConfig) {
+          const { label, url, corsRequired } = launcherConfig;
+          let fetchUrl = url;
+
+          if (corsRequired) {
+              // Use a reliable CORS proxy service
+              // Note: Relying on external CORS proxies can be fragile.
+              // For production, consider a backend proxy.
+              fetchUrl = `https://corsproxy.io?${encodeURIComponent(url)}`;
+              console.log(`Using CORS proxy for: ${url}`);
+          }
+
+          try {
+              const response = await fetch(fetchUrl);
+              if (!response.ok) {
+                  // Provide more context in the error message
+                  throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+              }
+              const htmlContent = await response.text();
+              launchDirect(htmlContent, label); // Pass label as window title
+          } catch (error) {
+              console.error(`Failed to fetch or launch ${label}:`, error);
+              alert(`Failed to launch "${label}": ${error.message}`);
+          }
+      }
+
+      // --- Initialization ---
+
+      // Function to create and append buttons dynamically
+      function renderButtons() {
+          const btnContainer = document.querySelector('.btn-container');
+          if (!btnContainer) return;
+
+          // Clear existing buttons if any (useful for re-rendering)
+          btnContainer.innerHTML = '';
+
+          gameLaunchers.forEach(launcher => {
+              const button = document.createElement('button');
+              button.textContent = launcher.label;
+              button.onclick = () => fetchAndLaunch(launcher); // Assign fetchAndLaunch with config
+              btnContainer.appendChild(button);
+          });
+      }
+
+      // Render buttons when the DOM is ready
+      document.addEventListener('DOMContentLoaded', renderButtons);
+
+      // --- Original functions (kept for reference or if dynamic rendering is not desired) ---
+      /*
+      async function executeBlossom() {
+          const url = 'https://cdn.jsdelivr.net/gh/blossom-games/blossomgames@latest/blossomsinglefile.html';
+          try {
+              const response = await fetch(url);
+              if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+              const htmlContent = await response.text();
+              launchDirect(htmlContent, '#1 Blossom Games');
+          } catch (error) {
+              alert(`Failed: ${error.message}`);
+          }
+      }
+
+      async function executeGnMath() {
+          const url = 'https://cdn.jsdelivr.net/npm/gn-math.github.io-main@1.0.5/singlefile.html';
+          try {
+              const response = await fetch(url);
+              if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+              const htmlContent = await response.text();
+              launchDirect(htmlContent, '#2 GN Math');
+          } catch (error) {
+              alert(`Failed: ${error.message}`);
+          }
+      }
+
+      async function executeThree() {
+          const targetUrl = 'https://gist.githubusercontent.com/coolgame67/59d6a8b124e82fba41bed018d8aade56/raw/492db0757bd03c3b3dd04ec65fdc0f0a7297258b/gistfile1.html';
+          const url = 'https://corsproxy.io?' + encodeURIComponent(targetUrl);
+          try {
+              const response = await fetch(url);
+              if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+              const htmlContent = await response.text();
+              launchDirect(htmlContent, '#3 GN Math Alt');
+          } catch (error) {
+              alert(`Failed: ${error.message}`);
+          }
+      }
+      */
+    </script>
 
     <button class="logout-btn" id="logoutBtn">Disconnect Session</button>
   </div>
