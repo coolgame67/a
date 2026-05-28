@@ -103,96 +103,109 @@
 </div>
 
 <script>
-  const gameLaunchers = [
-    {
-      label: "#1 Blossom Games",
-      url: "https://cdn.jsdelivr.net/gh/blossom-games/blossomgames@latest/blossomsinglefile.html"
-    },
-    {
-      label: "#2 GN Math",
-      url: "https://cdn.jsdelivr.net/npm/gn-math.github.io-main@1.0.5/singlefile.html"
-    },
-    {
-      label: "#3 GN Math Alt",
-      url: "https://gist.githubusercontent.com/coolgame67/59d6a8b124e82fba41bed018d8aade56/raw/492db0757bd03c3b3dd04ec65fdc0f0a7297258b/gistfile1.html"
-    }
-  ];
-
-  async function launchGame(game) {
-
-    try {
-
-      const popup = window.open("", "_blank");
-
-      if (!popup) {
-        alert("Please allow popups for this site.");
-        return;
-      }
-
-      popup.document.write(`
-        <html>
-        <head>
-          <title>${game.label}</title>
-          <style>
-            html, body {
-              margin: 0;
-              width: 100%;
-              height: 100%;
-              overflow: hidden;
-              background: black;
-            }
-
-            iframe {
-              border: none;
-              width: 100%;
-              height: 100%;
-            }
-          </style>
-        </head>
-
-        <body>
-          <iframe src="${game.url}" allowfullscreen></iframe>
-        </body>
-        </html>
-      `);
-
-      popup.document.close();
-
-    } catch (err) {
-      console.error(err);
-      alert("Failed to launch game.");
-    }
+const gameLaunchers = [
+  {
+    label: "#1 Blossom Games",
+    url: "https://cdn.jsdelivr.net/gh/blossom-games/blossomgames@latest/blossomsinglefile.html"
+  },
+  {
+    label: "#2 GN Math",
+    url: "https://cdn.jsdelivr.net/npm/gn-math.github.io-main@1.0.5/singlefile.html"
+  },
+  {
+    label: "#3 GN Math Alt",
+    url: "https://gist.githubusercontent.com/coolgame67/59d6a8b124e82fba41bed018d8aade56/raw/492db0757bd03c3b3dd04ec65fdc0f0a7297258b/gistfile1.html"
   }
+];
 
-  function renderButtons() {
+async function launchGame(game) {
 
-    const container = document.getElementById("buttonContainer");
+  try {
 
-    gameLaunchers.forEach(game => {
+    const popup = window.open("", "_blank");
 
-      const btn = document.createElement("button");
+    if (!popup) {
+      alert("Enable popups first.");
+      return;
+    }
 
-      btn.className = "game-btn";
-      btn.textContent = game.label;
+    popup.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>${game.label}</title>
 
-      btn.addEventListener("click", () => {
-        launchGame(game);
+        <style>
+          html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+          }
+        </style>
+      </head>
+      <body>
+        Loading...
+      </body>
+      </html>
+    `);
+
+    popup.document.close();
+
+    // Fetch actual game HTML
+    const response = await fetch(game.url);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch game.");
+    }
+
+    const html = await response.text();
+
+    // Replace popup contents
+    popup.document.open();
+    popup.document.write(html);
+    popup.document.close();
+
+    // Re-run scripts manually
+    const scripts = popup.document.querySelectorAll("script");
+
+    scripts.forEach(oldScript => {
+
+      const newScript = popup.document.createElement("script");
+
+      // Copy attributes
+      [...oldScript.attributes].forEach(attr => {
+        newScript.setAttribute(attr.name, attr.value);
       });
 
-      container.appendChild(btn);
+      newScript.textContent = oldScript.textContent;
 
+      oldScript.parentNode.replaceChild(newScript, oldScript);
     });
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
   }
+}
 
-  renderButtons();
+// Render buttons
+const container = document.getElementById("buttonContainer");
 
-  document.getElementById("logoutBtn").addEventListener("click", () => {
+gameLaunchers.forEach(game => {
 
-    localStorage.removeItem("hb_auth");
+  const btn = document.createElement("button");
 
-    window.location.href = "login.html";
+  btn.className = "game-btn";
+  btn.textContent = game.label;
 
-  });
+  btn.onclick = () => launchGame(game);
+
+  container.appendChild(btn);
+
+});
 </script>
 
 </body>
