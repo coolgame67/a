@@ -104,108 +104,101 @@
 
 <script>
 const gameLaunchers = [
-  {
-    label: "#1 Blossom Games",
-    url: "https://cdn.jsdelivr.net/gh/blossom-games/blossomgames@latest/blossomsinglefile.html"
-  },
-  {
-    label: "#2 GN Math",
-    url: "https://cdn.jsdelivr.net/npm/gn-math.github.io-main@1.0.5/singlefile.html"
-  },
-  {
+{
     label: "#3 GN Math Alt",
     url: "https://gist.githubusercontent.com/coolgame67/59d6a8b124e82fba41bed018d8aade56/raw/492db0757bd03c3b3dd04ec65fdc0f0a7297258b/gistfile1.html"
-  }
+}
 ];
 
 async function launchGame(game) {
 
-  try {
-
-    const popup = window.open("", "_blank");
+    const popup = window.open("about:blank", "_blank");
 
     if (!popup) {
-      alert("Enable popups first.");
-      return;
+        alert("Allow popups first.");
+        return;
     }
 
     popup.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>${game.label}</title>
-
-        <style>
-          html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: black;
-          }
-        </style>
-      </head>
-      <body>
-        Loading...
-      </body>
-      </html>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>${game.label}</title>
+            <style>
+                html, body {
+                    margin:0;
+                    width:100%;
+                    height:100%;
+                    overflow:hidden;
+                    background:black;
+                }
+            </style>
+        </head>
+        <body>
+            Loading...
+        </body>
+        </html>
     `);
 
     popup.document.close();
 
-    // Fetch actual game HTML
-    const response = await fetch(game.url);
+    try {
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch game.");
+        // FETCH RAW HTML
+        const response = await fetch(
+            "https://corsproxy.io/?" + encodeURIComponent(game.url)
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch file.");
+        }
+
+        let html = await response.text();
+
+        // Remove frame blockers
+        html = html.replace(
+            /<meta[^>]*http-equiv=["']Content-Security-Policy["'][^>]*>/gi,
+            ""
+        );
+
+        // OPEN DOCUMENT
+        popup.document.open();
+
+        // WRITE RAW HTML DIRECTLY
+        popup.document.write(html);
+
+        popup.document.close();
+
+        // FORCE SCRIPT EXECUTION
+        const scripts = [...popup.document.querySelectorAll("script")];
+
+        for (const oldScript of scripts) {
+
+            const newScript = popup.document.createElement("script");
+
+            // Copy attributes
+            for (const attr of oldScript.attributes) {
+                newScript.setAttribute(attr.name, attr.value);
+            }
+
+            // Copy inline JS
+            newScript.textContent = oldScript.textContent;
+
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+        }
+
+    } catch (err) {
+
+        console.error(err);
+
+        popup.document.body.innerHTML = `
+            <h1 style="color:white;font-family:sans-serif">
+                Failed to load game
+            </h1>
+            <p style="color:red">${err.message}</p>
+        `;
     }
-
-    const html = await response.text();
-
-    // Replace popup contents
-    popup.document.open();
-    popup.document.write(html);
-    popup.document.close();
-
-    // Re-run scripts manually
-    const scripts = popup.document.querySelectorAll("script");
-
-    scripts.forEach(oldScript => {
-
-      const newScript = popup.document.createElement("script");
-
-      // Copy attributes
-      [...oldScript.attributes].forEach(attr => {
-        newScript.setAttribute(attr.name, attr.value);
-      });
-
-      newScript.textContent = oldScript.textContent;
-
-      oldScript.parentNode.replaceChild(newScript, oldScript);
-    });
-
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
 }
-
-// Render buttons
-const container = document.getElementById("buttonContainer");
-
-gameLaunchers.forEach(game => {
-
-  const btn = document.createElement("button");
-
-  btn.className = "game-btn";
-  btn.textContent = game.label;
-
-  btn.onclick = () => launchGame(game);
-
-  container.appendChild(btn);
-
-});
 </script>
 
 </body>
